@@ -1,0 +1,31 @@
+{
+  "name": "f8",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon --inspect src/index.js",
+    "watch": "node-sass --watch src/resources/scss/ -o src/public/css/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiendungid1/nodejs_demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tiendungid1/nodejs_demo/issues"
+  },
+  "homepage": "https://github.com/tiendungid1/nodejs_demo#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "mongoose": "^5.12.10",
+    "mongoose-slug-generator": "^1.0.4",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "node-sass": "^6.0.0"
+  }
+}
