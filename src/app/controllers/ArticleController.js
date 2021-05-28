@@ -18,12 +18,28 @@ class ArticleController {
         res.render('articles/create');
     }
 
-    // [POST] /articles/store
+    // [POST] /
     store(req, res) {
         const article = new Article(req.body);
         article.save()
-            .then(() => res.redirect('/'))
+            .then(() => res.redirect('/')) // method redirect sẽ thêm 1 key location vào phần response header, từ đó browser mới redirect dc
             .catch(err => {})
+    }
+
+    // [GET] /articles/:id/edit
+    edit(req, res, next) {
+        Article.findById(req.params.id)
+            .then(article => res.render('articles/edit', {
+                article: mongooseToObject(article)
+            }))
+            .catch(next)
+    }
+
+    // [PUT] /articles/:id
+    update(req, res, next) {
+        Article.updateOne({_id: req.params.id}, req.body)
+            .then(() => res.redirect('/me/stored/articles'))
+            .catch(next)
     }
 }
 

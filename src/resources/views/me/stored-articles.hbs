@@ -1,0 +1,31 @@
+<div class="mt-4">
+    <h1>My Books</h1>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Image</th>
+                <th scope="col">Description</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each articles}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.name}}</td>
+                <td>
+                    <img src="{{this.image}}" height="143px" width="100px">
+                </td>
+                <td>{{this.description}}</td>
+                <td>
+                    <a href="/articles/{{this._id}}/edit">Edit</a>
+                    <a href="">Delete</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
