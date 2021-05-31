@@ -12,6 +12,9 @@ const methodOverride = require('method-override');
 // Connect to DB
 db.connect();
 
+// Static file
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Override with POST
 app.use(methodOverride('_method'));
 

@@ -41,6 +41,13 @@ class ArticleController {
             .then(() => res.redirect('/me/stored/articles'))
             .catch(next)
     }
+
+    // [DELETE] /articles/:id
+    delete(req, res, next) {
+        Article.deleteOne({_id: req.params.id})
+            .then(() => res.redirect('back')) // back nghĩa là thực hiện xong thì quay về trang ban đầu
+            .catch(next)
+    }
 }
 
 module.exports = new ArticleController;
