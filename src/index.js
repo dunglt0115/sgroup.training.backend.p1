@@ -19,12 +19,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Cookie parser
 app.use(cookieParser("Demo"));
 
+// Body parser for post
+app.use(express.urlencoded({extended: true})); // Gửi từ form HTML thì thằng này xử lý
+app.use(express.json()); // Gửi dữ liệu = thư viện như XMLHttpRequest, fetch... hoặc = code js vanilla
+
 // Override with POST
 app.use(methodOverride('_method'));
 
-// Body parser for post
-app.use(express.urlencoded({extended: true})); // Gửi từ form HTML thì thằng này xử lý
-app.use(express.json()); // Gửi dữ liệu = thư viện như XMLHttpRequest, fetch... hoặc = code js vanilla 
+// Custom function cho getter để lấy req method từ req body's method fields
+// enctype="application/x-www-form-urlencoded"
+// const getter = function(req, res) {
+//     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+//         const method = req.body._method;
+//         delete req.body._method;
+//         return method;
+//     }
+// };
+// app.use(methodOverride(getter));
 
 // View engine
 app.engine('.hbs', handlebars({
