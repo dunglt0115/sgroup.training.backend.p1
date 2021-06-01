@@ -8,12 +8,16 @@ const handlebars = require('express-handlebars');
 const route = require('./routes');
 const db = require('./config/db');
 const methodOverride = require('method-override');
+const cookieParser = require('cookie-parser');
 
 // Connect to DB
 db.connect();
 
 // Static file
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Cookie parser
+app.use(cookieParser("Demo"));
 
 // Override with POST
 app.use(methodOverride('_method'));
@@ -42,7 +46,6 @@ app.set('views', path.join(__dirname, 'resources/views')); // View engine sẽ �
  * 4. Các file route khác sẽ khai báo phần path tổng, và require controller của riêng file đó vào
  * 5. Về lại file index, tạo route cụ thể
  */
-
 route(app);
 
 // (*)

@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 
+// User
+const UserModel = require('../../app/models/Users');
+const bcrypt = require('bcrypt');
+
 async function connect() {
     try {
+        const DEFAULT_PWD = bcrypt.hashSync('123456', 10);
         await mongoose.connect('mongodb://localhost:27017/demo_sgroup', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
@@ -9,6 +14,18 @@ async function connect() {
             useCreateIndex: true
         });
         console.log ("Connect successfully!")
+
+        await UserModel.deleteMany();
+        await UserModel.insertMany([
+            {
+                email: 'demo1@gmail.com',
+                password: DEFAULT_PWD,
+            },
+            {
+                email: 'demo2@gmail.com',
+                password: DEFAULT_PWD,
+            },
+        ]);
     } catch (err) {
         console.log (err);
     }
