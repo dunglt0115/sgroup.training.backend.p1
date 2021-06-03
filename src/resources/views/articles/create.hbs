@@ -1,15 +1,23 @@
 <div class="mt-4">
     <h1>Add book</h1>
 
+    {{#if errs}}
+        {{#each errs}}
+        <div class="alert alert-danger" role="alert">
+            {{this}}
+        </div>
+        {{/each}}
+    {{/if}}
+
     <form method="post" action="/articles/store">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" id="name">
+            <input type="text" name="name" class="form-control" id="name" value={{#if values.name}} {{values.name}} {{else}} "" {{/if}}>
         </div>
 
         <div class="form-group">
             <label for="image">Image</label>
-            <input type="text" name="image" class="form-control" id="image">
+            <input type="text" name="image" class="form-control" id="image" value={{#if values.image}} {{values.image}} {{else}} "" {{/if}}>
         </div>
 
         <div class="form-group">

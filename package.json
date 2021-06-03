@@ -2,7 +2,7 @@
   "name": "f8",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "start": "nodemon --inspect src/index.js",
     "watch": "node-sass --watch src/resources/scss/ -o src/public/css/"
@@ -20,6 +20,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.2",
     "method-override": "^3.0.0",
