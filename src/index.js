@@ -1,8 +1,8 @@
-// Thuê express quản lý giùm cái server
+require('dotenv').config();
 const express = require('express');
 const app = express();
+const port = process.env.PORT;
 // Init app
-const port = 3000; // Khai báo nơi các hoạt động trên app diễn ra (*)
 const path = require('path');
 const handlebars = require('express-handlebars');
 const route = require('./routes');
@@ -17,7 +17,7 @@ db.connect();
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Cookie parser
-app.use(cookieParser("Demo"));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 // Body parser for post
 app.use(express.urlencoded({extended: true})); // Gửi từ form HTML thì thằng này xử lý
@@ -59,7 +59,6 @@ app.set('views', path.join(__dirname, 'resources/views')); // View engine sẽ �
  */
 route(app);
 
-// (*)
 app.listen(port, () => {
     console.log(`Demo app is listening at http://localhost:${port}`);
 });
