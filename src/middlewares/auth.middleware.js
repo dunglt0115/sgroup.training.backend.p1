@@ -1,13 +1,15 @@
+const UserModel = require('../app/models/Users');
+
 module.exports = {
-    requireAuth(req, res, next) {
-        if (!req.signedCookies.users) {
+    async requireAuth(req, res, next) {
+        if (!req.signedCookies.user) {
             return res.redirect('/login');
         }
 
         return next();
     },
     notRequireAuth(req, res, next) {
-        if (req.signedCookies.users) {
+        if (req.signedCookies.user) {
             return res.redirect('/');
         }
 

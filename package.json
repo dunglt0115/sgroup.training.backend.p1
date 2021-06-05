@@ -19,15 +19,18 @@
   "homepage": "https://github.com/tiendungid1/nodejs_demo#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "connect-mongodb-session": "^2.4.1",
     "cookie-parser": "^1.4.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.2",
+    "express-session": "^1.17.2",
     "method-override": "^3.0.0",
     "mongoose": "^5.12.10",
     "mongoose-slug-generator": "^1.0.4",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "node-sass": "^6.0.0"
