@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const newsController = require('../app/controllers/NewsController');
+const newsController = require('../../app/controllers/NewsController');
 
 router.get('/:slug', newsController.show);
 router.get('/', newsController.index);
@@ -9,4 +9,4 @@ router.get('/', newsController.index);
 // File khác để /news, file này chỉ cần để / là js sẽ tự hiểu
 // Ghi ngược lại cũng được nhưng sẽ không rõ ràng bằng
 
-module.exports = router;
+export default router;
