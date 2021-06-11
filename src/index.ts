@@ -37,10 +37,8 @@ app.engine('.hbs', handlebars({
     },
 }));
 app.set('view engine', '.hbs');
-app.set('views', path.join(__dirname, 'resources/views')); // View engine sẽ được tìm trong path resources/views
+app.set('views', path.join(__dirname, 'resources/views'));
 
-// req là object chứa những thông tin mà ứng dụng từ phía client gửi lên server (request message)
-// res là object để config để sau khi xử lý request, thì sẽ trả về cái gì, ntn
 route(app);
 
 app.listen(envConfig.get('PORT'), () => {

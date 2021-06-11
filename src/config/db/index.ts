@@ -30,4 +30,4 @@ async function connect() {
     }
 }
 
-export default {connect}; // Không nhất thiết phải bỏ vào trong object, nhưng bỏ vào thì lúc require bên file chính, biến nhận được sẽ là object, khá tiện
+export default {connect};

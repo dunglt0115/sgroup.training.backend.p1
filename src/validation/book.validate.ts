@@ -1,4 +1,5 @@
-module.exports.validate = function(req, res, next) {
+import { NextFunction, Request, Response } from "express";
+export const validate = function(req: Request, res: Response, next: NextFunction) {
     let errs = [];
         
     if (!req.body.name) {

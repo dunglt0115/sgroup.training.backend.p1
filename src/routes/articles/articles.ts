@@ -1,10 +1,10 @@
 import express from 'express';
 const router = express.Router();
-const articleController = require('../../app/controllers/ArticleController');
-const validate = require('../../validation/book.validate');
+import articleController from '../../app/controllers/ArticleController';
+import { validate } from '../../validation/book.validate';
 
 router.get('/create', articleController.create);
-router.post('/store', validate.validate, articleController.store);
+router.post('/store', validate, articleController.store);
 router.get('/:id/edit', articleController.edit);
 router.put('/:id', articleController.update);
 router.delete('/:id', articleController.delete);

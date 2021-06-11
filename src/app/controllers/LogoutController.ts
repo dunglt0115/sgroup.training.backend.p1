@@ -1,8 +1,9 @@
-const SessionModel = require('../models/Sessions');
+import { NextFunction, Request, Response } from "express";
+import SessionModel from '../models/Sessions';
 
 class LogoutController {
     // [DELETE] /logout
-    async delete(req, res) {
+    async delete(req: Request, res: Response, next: NextFunction) {
         const sessionId = req.signedCookies.user;
         
         if (sessionId) {
@@ -17,4 +18,4 @@ class LogoutController {
     }
 }
 
-module.exports = new LogoutController;
+export default new LogoutController;

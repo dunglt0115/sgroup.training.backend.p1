@@ -1,15 +1,16 @@
-const UserModel = require('../models/Users');
-const SessionModel = require('../models/Sessions');
-const bcrypt = require('bcrypt');
+import { NextFunction, Request, Response } from "express";
+import SessionModel from '../models/Sessions';
+import UserModel from '../models/Users';
+import bcrypt from 'bcrypt';
 
 class LoginController {
     // [GET] /login
-    index(req, res) {
+    index(req: Request, res: Response) {
         res.render('login');
     }
 
     // [POST] /login
-    async login(req, res) {
+    async login(req: Request, res: Response) {
         const user = await UserModel.findOne({email: req.body.email});
         if (!user || !bcrypt.compareSync(req.body.password, user.password)) {
             return res.render('error');
@@ -19,7 +20,7 @@ class LoginController {
         
         // Check multiple login from same user
         const arr = await SessionModel.find({lock: true});
-        let isLoggedIn = arr.some((user, index) => {
+        let isLoggedIn = arr.some((user: any, index: any) => {
             return arr[index].user == userId;
         });
         if (isLoggedIn == true) {
@@ -38,4 +39,4 @@ class LoginController {
     }
 }
 
-module.exports = new LoginController;
+export default new LoginController;

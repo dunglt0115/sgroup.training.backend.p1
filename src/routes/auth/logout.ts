@@ -1,7 +1,6 @@
 import express from 'express';
 const router = express.Router();
-
-const logoutController = require('../../app/controllers/LogoutController');
+import logoutController from '../../app/controllers/LogoutController';
 
 router.delete('/', logoutController.delete);
 

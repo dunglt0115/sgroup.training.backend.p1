@@ -1,33 +1,34 @@
-const Article = require('../models/Articles');
-const {mongooseToObject} = require('../../util/mongoose');
+import { NextFunction, Request, Response } from "express";
+import Article from '../models/Articles';
+import { mongooseToObject } from '../../util/mongoose';
 
 class ArticleController {
     // [GET] /articles/:slug
-    show(req, res) {
+    show(req: Request, res: Response, next: NextFunction) {
         Article.findOne({slug: req.params.slug})
             .then(article => {
                 res.render('articles/show', {
                     article: mongooseToObject(article)
                 })
             })
-            .catch(err => next(err))
+            .catch(next)
     }
 
     // [GET] /articles/create
-    create(req, res) {
+    create(req: Request, res: Response) {
         res.render('articles/create');
     }
 
     // [POST] /
-    store(req, res) {
+    store(req: Request, res: Response) {
         const article = new Article(req.body);
         article.save()
-            .then(() => res.redirect('/')) // method redirect sẽ thêm 1 key location vào phần response header, từ đó browser mới redirect dc
+            .then(() => res.redirect('/'))
             .catch(err => {})
     }
 
     // [GET] /articles/:id/edit
-    edit(req, res, next) {
+    edit(req: Request, res: Response, next: NextFunction) {
         Article.findById(req.params.id)
             .then(article => res.render('articles/edit', {
                 article: mongooseToObject(article)
@@ -36,18 +37,18 @@ class ArticleController {
     }
 
     // [PUT] /articles/:id
-    update(req, res, next) {
+    update(req: Request, res: Response, next: NextFunction) {
         Article.updateOne({_id: req.params.id}, req.body)
             .then(() => res.redirect('/me/stored/articles'))
             .catch(next)
     }
 
     // [DELETE] /articles/:id
-    delete(req, res, next) {
+    delete(req: Request, res: Response, next: NextFunction) {
         Article.deleteOne({_id: req.params.id})
-            .then(() => res.redirect('back')) // back nghĩa là thực hiện xong thì quay về trang ban đầu
+            .then(() => res.redirect('back'))
             .catch(next)
     }
 }
 
-module.exports = new ArticleController;
+export default new ArticleController;

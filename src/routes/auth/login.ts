@@ -1,7 +1,6 @@
 import express from 'express';
 const router = express.Router();
-
-const loginController = require('../../app/controllers/LoginController');
+import loginController from '../../app/controllers/LoginController';
 
 router.get('/', loginController.index);
 router.post('/', loginController.login);

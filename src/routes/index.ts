@@ -4,15 +4,15 @@ import siteRouter from './site/site';
 import meRouter from './me/me';
 import loginRouter from './auth/login';
 import logoutRouter from './auth/logout';
-import authMiddleware from '../middlewares/auth.middleware';
+import { requireAuth, notRequireAuth } from '../middlewares/auth.middleware';
 
 function route(app: any) {
-    app.use('/news', authMiddleware.requireAuth, newsRouter);
-    app.use('/me', authMiddleware.requireAuth, meRouter);
-    app.use('/articles', authMiddleware.requireAuth, articlesRouter);
+    app.use('/news', requireAuth, newsRouter);
+    app.use('/me', requireAuth, meRouter);
+    app.use('/articles', requireAuth, articlesRouter);
     app.use('/logout', logoutRouter);
-    app.use('/login', authMiddleware.notRequireAuth, loginRouter);
-    app.use('/', authMiddleware.requireAuth, siteRouter); // Luôn để trang chủ cuối cùng, để hàm chạy từ trang cấp thấp nhất đến cao nhất
+    app.use('/login', notRequireAuth, loginRouter);
+    app.use('/', requireAuth, siteRouter);
 }
 
 export default route;
