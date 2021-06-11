@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import SessionModel from '../models/Sessions';
 import UserModel from '../models/Users';
 import bcrypt from 'bcrypt';
+import { ILoginDTO, LoginDTO } from "../../dto/auth/login.dto";
 
 class LoginController {
     // [GET] /login
@@ -11,8 +12,10 @@ class LoginController {
 
     // [POST] /login
     async login(req: Request, res: Response) {
-        const user = await UserModel.findOne({email: req.body.email});
-        if (!user || !bcrypt.compareSync(req.body.password, user.password)) {
+        const loginDto: ILoginDTO = LoginDTO(req);
+
+        const user = await UserModel.findOne({email: loginDto.email});
+        if (!user || !bcrypt.compareSync(loginDto.password, user.password)) {
             return res.render('error');
         }
 
