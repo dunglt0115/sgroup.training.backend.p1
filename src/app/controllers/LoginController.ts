@@ -22,7 +22,7 @@ class LoginController {
         const userId = user._id;
         
         // Check multiple login from same user
-        const arr = await SessionModel.find({lock: true});
+        const arr = await SessionModel.find({});
         let isLoggedIn = arr.some((user: any, index: any) => {
             return arr[index].user == userId;
         });
@@ -31,7 +31,7 @@ class LoginController {
         }
 
         // Add new session to database and create cookie
-        const session = await SessionModel.create({user: userId, lock: true});
+        const session = await SessionModel.create({user: userId});
         res.cookie('user', session._id, {
             signed: true,
             maxAge: 24 * 60 * 60 * 1000,

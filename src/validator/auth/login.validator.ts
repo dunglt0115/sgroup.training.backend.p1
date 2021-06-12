@@ -5,12 +5,16 @@ export function ValidateLogin(req: Request, res: Response, next: NextFunction) {
     const body: ILoginDTO = req.body;
     let errs: string[] = [];
 
-    if (!body.email || !body?.email.match(/\S+@\S+\.\S+/)) {
+    if (!body.email) {
+        errs.push("Enter your email!");
+    } else if (!body?.email.match(/\S+@\S+\.\S+/)) {
         errs.push("Wrong email format!");
     }
 
-    if (!body.password || !body?.password.match(/^.{6,}/)) {
-        errs.push("Wrong password format!");
+    if (!body.password) {
+        errs.push("Enter your password!");
+    } else if (!body?.password.match(/^.{6,}/)) {
+        errs.push("Wrong password!");
     }
 
     if (errs.length > 0) {
