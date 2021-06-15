@@ -4,6 +4,7 @@ import UserModel from "../models/Users";
 import bcrypt from 'bcrypt';
 import { SessionService } from "../api/session.api";
 import { SessionServiceImpl } from "./SessionService";
+import { envConfig } from "../../env";
 
 class Service implements AuthService {
     private sessionService: SessionService;
@@ -16,18 +17,33 @@ class Service implements AuthService {
         if (!user || !bcrypt.compareSync(LoginDTO.password, user.password)) {
             return null;
         }
-        const userId: string = user._id;
 
-        const arr = await this.sessionService.find({});
-        let isLoggedIn: boolean = arr.some((user: any, index: number) => {
-            return arr[index].user == userId;
-        });
-        if (isLoggedIn == true) {
-            return null;
+        const sessionFromDB = await this.sessionService.find({user: user._id});
+        
+        // Acc chưa có người đăng nhập
+        if (sessionFromDB.length == 0) {
+            const session = await this.sessionService.create({
+                user: user._id,
+                expired: Date.now() + Number.parseInt(envConfig.get('SESSION_EXPIRED')),
+            });
+            return session._id;
         }
 
-        const session = await this.sessionService.create({user: userId});
-        return session._id;
+        // Kiểm tra phiên đăng nhập
+        let sessionTime: number = sessionFromDB.reduce((acc, val, index) => {
+            return Date.now() - sessionFromDB[index].expired;
+        }, 0);
+
+        if (sessionTime > 0) { // Hết hạn phiên làm việc
+            await this.sessionService.deleteOne({user: user._id});
+            const session = await this.sessionService.create({
+                user: user._id,
+                expired: Date.now() + Number.parseInt(envConfig.get('SESSION_EXPIRED')),
+            });
+            return session._id;
+        } else {
+            return null;
+        }
     }
 }
 

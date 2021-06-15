@@ -3,11 +3,14 @@ import { Query } from "mongoose";
 import SessionModel, { ISession } from "../models/Sessions";
 
 class Service implements SessionService {
-    find({}): Query<ISession[], ISession, {}> {
+    find(user: {}): Query<ISession[], ISession, {}> {
         return SessionModel.find({});
     }
     create(user: {}): Promise<ISession> {
         return SessionModel.create(user);
+    }
+    deleteOne(session: {}): any {
+        return SessionModel.deleteOne(session);
     }
 }
 

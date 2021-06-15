@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { AuthServiceImpl } from "../services/AuthService";
 import { AuthService } from "../api/auth.api";
 import SessionModel from '../models/Sessions';
+import { envConfig } from "../../env";
 
 class Controller {
     private authService: AuthService;
@@ -29,8 +30,8 @@ class Controller {
 
             res.cookie('user', sessionId, {
                 signed: true,
-                maxAge: 24 * 60 * 60 * 1000,
                 httpOnly: true,
+                maxAge: Date.now() + Number.parseInt(envConfig.get('SESSION_EXPIRED')),
             });
 
             return res.redirect('/');
