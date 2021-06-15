@@ -1,7 +1,7 @@
 document.getElementById("logout").addEventListener("submit", event => {
     event.preventDefault();
 
-    const url = "http://localhost:3000/logout";
+    const url = "http://localhost:3000/auth/logout";
     const deleteMethod = {
         method: "DELETE",
         credentials: "include",
@@ -16,5 +16,5 @@ document.getElementById("logout").addEventListener("submit", event => {
         .then(data => console.log(data))
         .catch(err => console.log(err));
     
-    window.location.href = "http://localhost:3000/login";
+    window.location.href = "http://localhost:3000/auth/login";
 })

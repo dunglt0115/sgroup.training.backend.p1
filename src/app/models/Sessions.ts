@@ -1,13 +1,13 @@
-import { Schema, model } from 'mongoose';
+import { Document, Schema, model } from 'mongoose';
 
-interface Session {
+export interface ISession extends Document {
     user: string;
 }
 
-const schema = new Schema<Session>({
-    user: {type: String},
+const schema = new Schema<ISession>({
+    user: String,
 });
 
-const SessionModel = model<Session>('Session', schema);
+const SessionModel = model<ISession>('Session', schema);
 
 export default SessionModel;

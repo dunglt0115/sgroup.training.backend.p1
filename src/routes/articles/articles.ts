@@ -1,12 +1,12 @@
 import express from 'express';
 const router = express.Router();
-import articleController from '../../app/controllers/ArticleController';
+import { ArticleController } from '../../app/controllers/ArticleController';
 
-router.get('/create', articleController.create);
-router.post('/store', articleController.store);
-router.get('/:id/edit', articleController.edit);
-router.put('/:id', articleController.update);
-router.delete('/:id', articleController.delete);
-router.get('/:slug', articleController.show);
+router.get('/create', ArticleController.create);
+router.post('/store', ArticleController.store);
+router.get('/:id/edit', ArticleController.edit);
+router.put('/:id', ArticleController.update);
+router.delete('/:id', ArticleController.delete);
+router.get('/:slug', ArticleController.show);
 
 export default router;

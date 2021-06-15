@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import Article from '../models/Articles';
 import { mongooseToObject } from '../../util/mongoose';
 
-class ArticleController {
+class Controller {
     // [GET] /articles/:slug
     show(req: Request, res: Response, next: NextFunction) {
         Article.findOne({slug: req.params.slug})
@@ -51,4 +51,4 @@ class ArticleController {
     }
 }
 
-export default new ArticleController;
+export const ArticleController = new Controller();

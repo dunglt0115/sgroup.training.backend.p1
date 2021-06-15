@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import Article from '../models/Articles';
 import { mongoosesToObject } from '../../util/mongoose';
 
-class MeController {
+class Controller {
     // [GET] /me/stored/articles
     storedArticles(req: Request, res: Response, next: NextFunction) {
         Article.find({})
@@ -13,4 +13,4 @@ class MeController {
     }
 }
 
-export default new MeController;
+export const MeController = new Controller();

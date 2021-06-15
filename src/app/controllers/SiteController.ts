@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import Article from '../models/Articles';
 import { mongoosesToObject } from '../../util/mongoose';
 
-class SiteController {
+class Controller {
     // [GET] /
     index(req: Request, res: Response, next: NextFunction) {
         Article.find({})
@@ -15,4 +15,4 @@ class SiteController {
     }
 }
 
-export default new SiteController;
+export const SiteController = new Controller();
