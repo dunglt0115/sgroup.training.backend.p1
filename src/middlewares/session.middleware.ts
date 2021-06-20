@@ -14,12 +14,12 @@ class Controller {
         const sessionFromDB = await this.sessionService.find({_id: sessionId});
         let alert = [];
 
-        // Kiểm tra xem có ai khác đã đăng nhập vào acc hay không
-        let staySignedIn: boolean = sessionFromDB.some((session, index) => {
+        // Check if it's your turn to break
+        let isWorking: boolean = sessionFromDB.some((session, index) => {
             return sessionFromDB[index]._id == sessionId;
         });
 
-        if (staySignedIn == false) {
+        if (isWorking == false) {
             res.clearCookie("user");
             alert.push(`Your session has expired. Please login again after ${Number.parseInt(envConfig.get('SESSION_EXPIRED'))/1000} seconds`)
             return res.render('login', {

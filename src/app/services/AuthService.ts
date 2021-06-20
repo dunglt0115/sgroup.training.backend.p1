@@ -20,7 +20,7 @@ class Service implements AuthService {
 
         const sessionFromDB = await this.sessionService.find({user: user._id});
         
-        // Acc chưa có người đăng nhập
+        // Check if this account is currently unused
         if (sessionFromDB.length == 0) {
             const session = await this.sessionService.create({
                 user: user._id,
@@ -29,12 +29,12 @@ class Service implements AuthService {
             return session._id;
         }
 
-        // Kiểm tra phiên đăng nhập
+        // Check working session
         let sessionTime: number = sessionFromDB.reduce((acc, val, index) => {
             return Date.now() - sessionFromDB[index].expired;
         }, 0);
 
-        if (sessionTime > 0) { // Hết hạn phiên làm việc
+        if (sessionTime > 0) { // Session timeout
             await this.sessionService.deleteOne({user: user._id});
             const session = await this.sessionService.create({
                 user: user._id,
@@ -44,6 +44,17 @@ class Service implements AuthService {
         } else {
             return null;
         }
+    }
+
+    async register(LoginDTO: ILoginDTO): Promise<void> {
+        const user = await UserModel.findOne({email: LoginDTO.email});
+        if (user) {
+            throw new Error(`User existed`);
+        }
+
+        LoginDTO.password = bcrypt.hashSync(LoginDTO.password, 10);
+        await UserModel.create(LoginDTO);
+        return;
     }
 }
 

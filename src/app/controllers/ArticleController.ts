@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Article from '../models/Articles';
-import { mongooseToObject } from '../../util/mongoose';
+import { mongooseToObject } from '../../tools/mongoose';
 
 class Controller {
     // [GET] /articles/:slug

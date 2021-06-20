@@ -12,7 +12,7 @@ class Controller {
 
     // [GET] /login
     index(req: Request, res: Response) {
-        res.render('login');
+        return res.render('login');
     }
 
     // [POST] /login
@@ -41,6 +41,28 @@ class Controller {
                 errs: errs
             });
         }
+    }
+
+    // [GET] /auth/register
+    register(req: Request, res: Response) {
+        return res.render('register');
+    }
+
+    // [POST] /auth/register
+    create = async (req: Request, res: Response) => {
+        let errs: string[] = [];
+        try {
+            await this.authService.register(req.body);
+        } catch (error) {
+            errs.push(error);
+            return res.render('error', {
+                errs: errs
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Register success'
+        })
     }
 
     // [DELETE] /logout

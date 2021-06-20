@@ -1,0 +1,26 @@
+<div class="mt-4">
+    <h1>Create new account</h1>
+
+    {{#if errs}}
+        {{#each errs}}
+        <div class="alert alert-danger mt-4" role="alert">
+            {{this}}
+        </div>
+        {{/each}}
+    {{/if}}
+
+    <form id="register" class="mt-4" action="/auth/register" method="POST">
+        <div class="form-group">
+            <label for="userEmail">Your email address</label>
+            <input id="userEmail" type="text" class="form-control" name="email" placeholder="Enter email" value={{#if values.email}} {{values.email}} {{else}} "" {{/if}}>
+        </div>
+        <div class="form-group">
+            <label for="userPassword">Password</label>
+            <input id="userPassword" type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+        <span>Already a member? <a href="/auth/login" class="text-info">Log In</a></span>
+    </form>
+</div>
+
+<script src="/script/register.js"></script>
