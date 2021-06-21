@@ -9,7 +9,7 @@
         {{/each}}
     {{/if}}
 
-    <form id="register" class="mt-4" action="/auth/register" method="POST">
+    <form id="register" class="mt-4">
         <div class="form-group">
             <label for="userEmail">Your email address</label>
             <input id="userEmail" type="text" class="form-control" name="email" placeholder="Enter email" value={{#if values.email}} {{values.email}} {{else}} "" {{/if}}>

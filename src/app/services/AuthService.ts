@@ -47,13 +47,14 @@ class Service implements AuthService {
     }
 
     async register(LoginDTO: ILoginDTO): Promise<void> {
-        const user = await UserModel.findOne({email: LoginDTO.email});
-        if (user) {
-            throw new Error(`User existed`);
+        const existedUser = await UserModel.findOne({email: LoginDTO.email});
+        if (existedUser) {
+            throw new Error(`This user has already been existed`);
         }
 
         LoginDTO.password = bcrypt.hashSync(LoginDTO.password, 10);
-        await UserModel.create(LoginDTO);
+        const newUser = new UserModel(LoginDTO);
+        await newUser.save();
         return;
     }
 }

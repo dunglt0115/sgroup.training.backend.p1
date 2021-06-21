@@ -48,7 +48,7 @@ class Controller {
         return res.render('register');
     }
 
-    // [POST] /auth/register
+    // [POST] /auth/create
     create = async (req: Request, res: Response) => {
         let errs: string[] = [];
         try {

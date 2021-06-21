@@ -4,17 +4,18 @@ import { Schema, model } from 'mongoose';
 const slug = require('mongoose-slug-generator');
 
 interface IArticle {
-    name: string;
-    image: string;
-    description: string;
-    slug: string;
     deleted: boolean;
+    name: string;
+    description: string;
+    image: string;
+    slug: string;
 }
 
 const schema = new Schema<IArticle>({
+    deleted: Boolean,
     name: String,
-    image: String,
     description: String,
+    image: String,
     slug: {type: String, slug: 'name', unique: true},
 }, {
     timestamps: true,

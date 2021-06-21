@@ -1,8 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import Article from '../models/Articles';
 import { mongooseToObject } from '../../tools/mongoose';
+import { ArticleService } from '../api/article.api';
+import { ArticleServiceImpl } from '../services/ArticleService';
 
 class Controller {
+    private articleService: ArticleService;
+    constructor(articleService: ArticleService) {
+        this.articleService = articleService;
+    }
+
     // [GET] /articles/:slug
     show(req: Request, res: Response, next: NextFunction) {
         Article.findOne({slug: req.params.slug})
@@ -16,15 +23,24 @@ class Controller {
 
     // [GET] /articles/create
     create(req: Request, res: Response) {
-        res.render('articles/create');
+        return res.render('articles/create');
     }
 
-    // [POST] /
-    store(req: Request, res: Response) {
-        const article = new Article(req.body);
-        article.save()
-            .then(() => res.redirect('/'))
-            .catch(err => {})
+    // [POST] /articles/store
+    store = async (req: Request, res: Response) => {
+        let errs: string[] = [];
+        try {
+            await this.articleService.createNewArticle(req.body);
+        } catch (error) {
+            errs.push(error);
+            return res.render('error', {
+                errs: errs
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Successfully added new article'
+        })
     }
 
     // [GET] /articles/:id/edit
@@ -51,4 +67,4 @@ class Controller {
     }
 }
 
-export const ArticleController = new Controller();
+export const ArticleController = new Controller(ArticleServiceImpl);

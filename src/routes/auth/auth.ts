@@ -7,7 +7,7 @@ import { notRequireAuth } from '../../middlewares/auth.middleware';
 router.get('/login', notRequireAuth, AuthController.index);
 router.post('/login', ValidateLogin, AuthController.login);
 router.get('/register', notRequireAuth, AuthController.register);
-router.post('/register', AuthController.create);
+router.post('/create', AuthController.create);
 router.delete('/logout', AuthController.delete);
 
 export default router;

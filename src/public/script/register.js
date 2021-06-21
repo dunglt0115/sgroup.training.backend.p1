@@ -4,7 +4,7 @@ document.getElementById("register").addEventListener("submit", function(e) {
     const email = document.getElementById("userEmail").value;
     const password = document.getElementById("userPassword").value;
 
-    const url = "http://localhost:3000/auth/register";
+    const url = "http://localhost:3000/auth/create";
     const options = {
         method: 'POST',
         headers: {
@@ -28,8 +28,9 @@ document.getElementById("register").addEventListener("submit", function(e) {
         .then(update => console.log(update))
         .catch(e => {
             alert(e);
-            return location.href = "http://localhost:3000/auth/register";
+            return location.href = "http://localhost:3000/auth/create";
         });
 
     location.href = "http://localhost:3000/auth/login";
+    return;
 })
