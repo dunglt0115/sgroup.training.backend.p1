@@ -12,13 +12,13 @@ const app = express();
 db.connect();
 
 // Rules
-app.use(express.static(path.join(__dirname, 'public'))); // Static files
-app.use(cookieParser(envConfig.get('COOKIE_SECRET'))); // Cookie parser
-app.use(express.urlencoded({extended: true})); // Gửi từ form HTML thì thằng này xử lý
-app.use(express.json()); // Gửi dữ liệu = thư viện như XMLHttpRequest, fetch... hoặc = code js vanilla
-app.use(methodOverride('_method')); // Override with POST
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser(envConfig.get('COOKIE_SECRET')));
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+app.use(methodOverride('_method'));
 
-// ---- Bài tập: Custom function cho getter để lấy req method từ req body's method fields
+// Custom function for getter
 // enctype="application/x-www-form-urlencoded"
 // const getter = function(req, res) {
 //     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -29,7 +29,6 @@ app.use(methodOverride('_method')); // Override with POST
 // };
 // app.use(methodOverride(getter));
 
-// View engine
 app.engine('.hbs', handlebars({
     extname: '.hbs',
     helpers: {

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import Article from '../models/Articles';
-import { mongooseToObject } from '../../tools/mongoose';
+import { mongooseToObject } from '../../ultis/mongoose';
 import { ArticleService } from '../api/article.api';
 import { ArticleServiceImpl } from '../services/ArticleService';
 
