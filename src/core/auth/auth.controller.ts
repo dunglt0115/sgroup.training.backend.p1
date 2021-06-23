@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { AuthServiceImpl } from "../services/AuthService";
-import { AuthService } from "../api/auth.api";
-import SessionModel from '../models/Sessions';
+import { AuthService } from "./api/auth.api";
+import { AuthServiceImpl } from "./auth.service";
+import SessionModel from '../../models/Sessions';
 import { envConfig } from "../../env";
 
 class Controller {
@@ -10,14 +10,10 @@ class Controller {
         this.authService = authService;
     }
 
-    // [GET] /login
-    index(req: Request, res: Response) {
-        return res.render('login');
-    }
-
-    // [POST] /login
+    // Login
     login = async (req: Request, res: Response) => {
         let errs: string[] = [];
+
         try {
             const sessionId = await this.authService.loginDefault(req.body);
 
@@ -33,7 +29,6 @@ class Controller {
                 httpOnly: true,
                 maxAge: Date.now() + Number.parseInt(envConfig.get('SESSION_EXPIRED')),
             });
-
             return res.redirect('/');
         } catch (error) {
             errs.push(error);
@@ -43,12 +38,7 @@ class Controller {
         }
     }
 
-    // [GET] /auth/register
-    register(req: Request, res: Response) {
-        return res.render('register');
-    }
-
-    // [POST] /auth/create
+    // Register
     create = async (req: Request, res: Response) => {
         let errs: string[] = [];
         try {
@@ -63,21 +53,6 @@ class Controller {
         return res.status(200).json({
             message: 'Register success'
         })
-    }
-
-    // [DELETE] /logout
-    delete = async (req: Request, res: Response, next: NextFunction) => {
-        const sessionId = req.signedCookies.user;
-        
-        if (sessionId) {
-            await SessionModel.deleteOne({_id: sessionId});
-            res.clearCookie("user");
-            return res.status(203).json({});
-        }
-        
-        return res.status(200).json({
-            message: 'Can not logout'
-        });
     }
 }
 

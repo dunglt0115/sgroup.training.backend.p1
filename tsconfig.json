@@ -12,6 +12,6 @@
         "resolveJsonModule": true
     },
     "exclude": [
-        "src/public"
+        "public"
     ]
 }

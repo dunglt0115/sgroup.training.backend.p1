@@ -1,6 +1,6 @@
-import { SessionService } from "../api/session.api";
+import { SessionService } from "./api/session.api";
 import { Query } from "mongoose";
-import SessionModel, { ISession } from "../models/Sessions";
+import SessionModel, { ISession } from "../../models/Sessions";
 
 class Service implements SessionService {
     find(user: {}): Query<ISession[], ISession, {}> {

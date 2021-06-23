@@ -1,18 +1,17 @@
 // Import
 import { envConfig } from "./env";
 import express from 'express';
-import path from 'path';
 import handlebars from 'express-handlebars';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
 import db from './config/db';
-import route from './routes';
+import router from './core';
 
 const app = express();
 db.connect();
 
 // Rules
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 app.use(cookieParser(envConfig.get('COOKIE_SECRET')));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
@@ -36,9 +35,8 @@ app.engine('.hbs', handlebars({
     },
 }));
 app.set('view engine', '.hbs');
-app.set('views', path.join(__dirname, 'resources/views'));
 
-route(app);
+app.use('/', router);
 
 app.listen(envConfig.get('PORT'), () => {
     console.log(`Demo app is listening at http://localhost:${envConfig.get('PORT')}`);

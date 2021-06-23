@@ -1,9 +1,9 @@
-import { ILoginDTO } from "../../dto/auth/login.dto";
-import { AuthService } from "../api/auth.api";
-import UserModel from "../models/Users";
+import { ILoginDTO } from "./dto/login.dto";
+import { AuthService } from "./api/auth.api";
+import UserModel from "../../models/Users";
 import bcrypt from 'bcrypt';
-import { SessionService } from "../api/session.api";
-import { SessionServiceImpl } from "./SessionService";
+import { SessionService } from "../session/api/session.api";
+import { SessionServiceImpl } from "../session/session.service";
 import { envConfig } from "../../env";
 
 class Service implements AuthService {

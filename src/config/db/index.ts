@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import UserModel from '../../app/models/Users';
+import UserModel from '../../models/Users';
 import { envConfig } from "../../env";
 
 async function connect() {

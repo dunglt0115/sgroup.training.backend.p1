@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ILoginDTO } from "../../dto/auth/login.dto";
+import { ILoginDTO } from "../dto/login.dto";
 
 export function ValidateLogin(req: Request, res: Response, next: NextFunction) {
     const body: ILoginDTO = req.body;

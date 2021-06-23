@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { SessionService } from "../app/api/session.api";
-import { SessionServiceImpl } from "../app/services/SessionService";
+import { SessionService } from "../core/session/api/session.api";
+import { SessionServiceImpl } from "../core/session/session.service";
 import { envConfig } from "../env";
 
 class Controller {
@@ -14,14 +14,14 @@ class Controller {
         const sessionFromDB = await this.sessionService.find({_id: sessionId});
         let alert = [];
 
-        // Check if it's your turn to break
+        // Check if it's your turn to take a break
         let isWorking: boolean = sessionFromDB.some((session, index) => {
             return sessionFromDB[index]._id == sessionId;
         });
 
         if (isWorking == false) {
             res.clearCookie("user");
-            alert.push(`Your session has expired. Please login again after ${Number.parseInt(envConfig.get('SESSION_EXPIRED'))/1000} seconds`)
+            alert.push(`Your session has expired. You can login again after ${Number.parseInt(envConfig.get('SESSION_EXPIRED'))/1000} seconds`)
             return res.render('login', {
                 errs: alert
             })
