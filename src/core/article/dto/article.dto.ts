@@ -8,6 +8,6 @@ export function CreateDTO(body: any): IArticleDTO {
     return {
         name: body.name,
         description: body.description,
-        image: body.image,
+        image: body.image
     }
 }

@@ -19,16 +19,16 @@ document.getElementById("register").addEventListener("submit", function(e) {
     };
 
     fetch(url, options)
-        .then(data => {
-            if (!data.ok) {
-                throw Error(data.status);
+        .then(async response => {
+            try {
+                const data = await response.json();
+                alert('Successfully registered!');
+                alert(data);
+            } catch (error) {
+                alert('Error happened!');
+                alert(error);
+                return location.href = "http://localhost:3000/auth/register"
             }
-            return data.json();
-        })
-        .then(update => console.log(update))
-        .catch(e => {
-            alert(e);
-            return location.href = "http://localhost:3000/auth/create";
         });
 
     location.href = "http://localhost:3000/auth/login";

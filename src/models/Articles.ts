@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import mongooseDelete from 'mongoose-delete';
-import { Schema, model } from 'mongoose';
+import {Schema, model} from 'mongoose';
 const slug = require('mongoose-slug-generator');
 
 interface IArticle {
@@ -16,9 +16,9 @@ const schema = new Schema<IArticle>({
     name: String,
     description: String,
     image: String,
-    slug: {type: String, slug: 'name', unique: true},
+    slug: {type: String, slug: 'name', unique: true}
 }, {
-    timestamps: true,
+    timestamps: true
 });
 
 // Add plugin

@@ -34,16 +34,16 @@ if (form) {
         }
     
         fetch(url, options)
-            .then(data => {
-                if (!data.ok) {
-                    throw Error(data.status);
+            .then(async response => {
+                try {
+                    const data = await response.json();
+                    alert('Response data?');
+                    alert(data);
+                } catch (error) {
+                    alert('Error happened!');
+                    alert(error);
+                    return location.href = "http://localhost:3000/articles/create";
                 }
-                return data.json();
-            })
-            .then(update => console.log(update))
-            .catch(e => {
-                alert(e);
-                return location.href = "http://localhost:3000/articles/create";
             });
     
         location.href = "http://localhost:3000/";

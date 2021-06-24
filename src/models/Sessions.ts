@@ -1,4 +1,4 @@
-import { Document, Schema, model } from 'mongoose';
+import {Document, Schema, model} from 'mongoose';
 
 export interface ISession extends Document {
     user: string;
@@ -7,7 +7,7 @@ export interface ISession extends Document {
 
 const schema = new Schema<ISession>({
     user: String,
-    expired: Number,
+    expired: Number
 });
 
 const SessionModel = model<ISession>('Session', schema);

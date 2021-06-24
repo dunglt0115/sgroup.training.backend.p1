@@ -1,17 +1,18 @@
 import ArticleModel from '../../models/Articles';
-import { NextFunction, Request, Response } from "express";
-import { ArticleService } from './api/article.api';
-import { ArticleServiceImpl } from './article.service';
+import {NextFunction, Request, Response} from 'express';
+import {ArticleService} from './api/article.api';
+import {ArticleServiceImpl} from './article.service';
 
 class Controller {
     private articleService: ArticleService;
+
     constructor(articleService: ArticleService) {
         this.articleService = articleService;
     }
 
     // Create new article
     store = async (req: Request, res: Response) => {
-        let errs: string[] = [];
+        const errs: string[] = [];
         try {
             await this.articleService.createNewArticle(req.body);
         } catch (error) {

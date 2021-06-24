@@ -1,5 +1,5 @@
 // Import
-import { envConfig } from "./env";
+import {envConfig} from './env';
 import express from 'express';
 import handlebars from 'express-handlebars';
 import methodOverride from 'method-override';
@@ -31,8 +31,8 @@ app.use(methodOverride('_method'));
 app.engine('.hbs', handlebars({
     extname: '.hbs',
     helpers: {
-        sum: (a: number, b: number) => a + b,
-    },
+        sum: (a: number, b: number) => a + b
+    }
 }));
 app.set('view engine', '.hbs');
 
