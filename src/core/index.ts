@@ -1,5 +1,5 @@
 import express from 'express';
-import {Request, Response, NextFunction} from 'express';
+import {Request, Response} from 'express';
 import {requireAuth, notRequireAuth} from '../middlewares/auth.middleware';
 import {mongoosesToObject} from '../utils/mongoose';
 import Article from '../models/Articles';
@@ -9,20 +9,21 @@ import authRouter from './auth/auth.router';
 
 const router = express.Router();
 
-// Home page
-router.get('/', requireAuth, (req: Request, res: Response, next: NextFunction) => {
-    Article.find({})
-        .then(articles => {
-            res.render('home', {
-                articles: mongoosesToObject(articles)
-            })
-        })
-        .catch(next);
-})
-
 // Other pages
 router.use('/me', requireAuth, meRouter);
 router.use('/articles', requireAuth, articleRouter);
-router.use('/auth', notRequireAuth, authRouter);
+router.use('/auth', authRouter);
+
+// Home page
+router.get('/', requireAuth, async (req: Request, res: Response) => {
+    const articles = await Article.find({});
+    try {
+        return res.render('home', {
+            articles: mongoosesToObject(articles)
+        })
+    } catch (error) {
+       console.log(error);
+    }
+})
 
 export default router;

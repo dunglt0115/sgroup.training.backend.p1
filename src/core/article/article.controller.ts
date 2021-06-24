@@ -1,5 +1,5 @@
 import ArticleModel from '../../models/Articles';
-import {NextFunction, Request, Response} from 'express';
+import {Request, Response} from 'express';
 import {ArticleService} from './api/article.api';
 import {ArticleServiceImpl} from './article.service';
 
@@ -28,17 +28,23 @@ class Controller {
     }
 
     // Edit article
-    update(req: Request, res: Response, next: NextFunction) {
-        ArticleModel.updateOne({_id: req.params.id}, req.body)
-            .then(() => res.redirect('/me/stored/articles'))
-            .catch(next)
+    update = async (req: Request, res: Response) => {
+        try {
+            await ArticleModel.updateOne({_id: req.params.id}, req.body);
+            return res.redirect('/me/stored/articles');
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     // Delete article by id
-    delete(req: Request, res: Response, next: NextFunction) {
-        ArticleModel.deleteOne({_id: req.params.id})
-            .then(() => res.redirect('back'))
-            .catch(next)
+    delete = async (req: Request, res: Response) => {
+        try {
+            await ArticleModel.deleteOne({_id: req.params.id});
+            return res.redirect('back');
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

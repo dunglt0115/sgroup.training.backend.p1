@@ -3,11 +3,11 @@ document.getElementById("logout").addEventListener("submit", async function(e) {
 
     const url = 'http://localhost:3000/auth/logout';
     const options = {
-        method: 'GET',
-        credentials: 'include',
+        method: "GET",
+        credentials: "include",
         headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json',
+            "Accept": "application/json",
+            "Content-Type": "application/json",
         }
     }
 
@@ -15,8 +15,7 @@ document.getElementById("logout").addEventListener("submit", async function(e) {
         .then(async response => {
             try {
                 const data = await response.json();
-                alert('Response data?');
-                alert(data);
+                alert('Succesfully logout', data);
             } catch (error) {
                 alert('Error happened here!');
                 alert(error);

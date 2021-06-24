@@ -1,7 +1,6 @@
-import {NextFunction, Request, Response} from 'express';
+import {Request, Response} from 'express';
 import {AuthService} from './api/auth.api';
 import {AuthServiceImpl} from './auth.service';
-import SessionModel from '../../models/Sessions';
 import {envConfig} from '../../env';
 
 class Controller {
