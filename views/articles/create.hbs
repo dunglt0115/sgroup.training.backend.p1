@@ -1,7 +1,7 @@
 <div class="mt-4">
     <h1>Add book</h1>
 
-    <form id="newBook" class="mt-4">
+    <form id="newBook" class="mt-4" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" name="name" class="form-control" id="name">
@@ -12,8 +12,10 @@
         </div>
         <div class="form-group">
             <label for="image">Image</label>
-            <input type="file" name="image" class="filepond" id="image" accept="image/png, image/jpeg">
+            <input type="file" name="image" class="form-control-file" id="image" accept="image/png, image/jpeg, image/jpg">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+
+<script src="/script/article.js"></script>

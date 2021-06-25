@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index.js",
+    "start": "node -inspect build/index.js",
     "build:start": "npm run build && node build/index.js",
     "build": "rm -rf ./build && tsc",
     "dev": "nodemon",
@@ -23,7 +23,9 @@
   "homepage": "https://github.com/tiendungid1/nodejs_demo#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cloudinary": "^1.26.1",
     "cookie-parser": "^1.4.5",
+    "datauri": "^3.0.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.2",
@@ -31,6 +33,7 @@
     "mongoose": "^5.12.10",
     "mongoose-delete": "^0.5.3",
     "mongoose-slug-generator": "^1.0.4",
+    "multer": "^1.4.2",
     "nodemon": "^2.0.7",
     "ts-node": "^10.0.0"
   },
@@ -41,6 +44,7 @@
     "@types/express-handlebars": "^5.3.0",
     "@types/method-override": "0.0.31",
     "@types/mongoose-delete": "^0.5.3",
+    "@types/multer": "^1.4.6",
     "@types/node": "^15.12.4",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",

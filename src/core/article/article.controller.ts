@@ -2,6 +2,10 @@ import ArticleModel from '../../models/Articles';
 import {Request, Response} from 'express';
 import {ArticleService} from './api/article.api';
 import {ArticleServiceImpl} from './article.service';
+import path from 'path';
+import DatauriParser from 'datauri/parser';
+const parser = new DatauriParser();
+import cloudinary from '../../config/cloudinary';
 
 class Controller {
     private articleService: ArticleService;
@@ -11,20 +15,31 @@ class Controller {
     }
 
     // Create new article
-    store = async (req: Request, res: Response) => {
+    store = (req: Request, res: Response) => {
         const errs: string[] = [];
-        try {
-            await this.articleService.createNewArticle(req.body);
-        } catch (error) {
-            errs.push(error);
+
+        if (!req.file) {
+            errs.push("Can not add new book!");
             return res.render('error', {
                 errs: errs
             });
-        }
+        } else {
+            const fileInput: string = req.file.originalname;
+            const fileBuffer: Buffer = req.file.buffer;
+            const datauri: string | undefined = parser.format(path.extname(fileInput).toString(), fileBuffer).content;
 
-        return res.status(200).json({
-            message: 'Successfully added new article'
-        })
+            cloudinary.uploader.upload(datauri)
+                .then((result: any) => result.url)
+                .then(async (url: string) => {
+                    req.body.image = url;
+                    await this.articleService.createNewArticle(req.body);
+                })
+                .catch((error: any) => res.json(error));
+
+            return res.json({
+                message: 'Successfully added new article!'
+            });
+        }
     }
 
     // Edit article
