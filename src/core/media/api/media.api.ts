@@ -1,3 +1,3 @@
 export interface MediaService {
-    uploadOne(file?: string): Promise<string>;
+    uploadOne(file?: string, name?: string): Promise<string>;
 }

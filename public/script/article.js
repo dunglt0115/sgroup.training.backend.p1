@@ -17,6 +17,8 @@ document.getElementById("image").addEventListener("change", async function() {
     } else {
         const {src} = await response.json();
         previewImg.src = src;
+        previewImg.style.height = '144px';
+        previewImg.style.width = '100px';
         return;
     }
 });

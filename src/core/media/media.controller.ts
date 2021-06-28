@@ -22,7 +22,7 @@ class Controller {
             const fileBuffer: Buffer = req.file.buffer;
             const datauri: string | undefined = parser.format(path.extname(fileInput).toString(), fileBuffer).content;
 
-            const src = await this.mediaService.uploadOne(datauri);
+            const src = await this.mediaService.uploadOne(datauri, fileInput);
 
             return res.status(200).json({src});
         }
