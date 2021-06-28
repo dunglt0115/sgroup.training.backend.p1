@@ -6,6 +6,7 @@ import Article from '../models/Articles';
 import articleRouter from './article/article.router';
 import meRouter from './me/me.router';
 import authRouter from './auth/auth.router';
+import mediaRouter from './media/media.router';
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ const router = express.Router();
 router.use('/me', requireAuth, meRouter);
 router.use('/articles', requireAuth, articleRouter);
 router.use('/auth', authRouter);
+router.use('/media', mediaRouter);
 
 // Home page
 router.get('/', requireAuth, async (req: Request, res: Response) => {

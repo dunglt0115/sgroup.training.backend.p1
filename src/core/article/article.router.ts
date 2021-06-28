@@ -3,7 +3,7 @@ import {Request, Response} from 'express';
 import {ArticleController} from './article.controller';
 import {mongooseToObject} from '../../utils/mongoose';
 import ArticleModel from '../../models/Articles';
-import {multerUpload} from '../../middlewares/multer.middleware';
+import {multerUploader} from '../../middlewares/multer.middleware';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get('/create', (req: Request, res: Response) => {
     return res.render('articles/create');
 });
 
-router.post('/store', multerUpload, ArticleController.store);
+router.post('/store', multerUploader, ArticleController.store);
 
 // Page: Edit article
 router.get('/:id/edit', async (req: Request, res: Response) => {
