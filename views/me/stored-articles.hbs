@@ -17,7 +17,7 @@
                 <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
                 <td>
-                    <img src="data:image/jpg;base64,{{this.image}}" height="144px" width="100px">
+                    <img src="{{this.image}}" height="144px" width="100px">
                 </td>
                 <td>{{this.description}}</td>
                 <td>
@@ -51,7 +51,9 @@
 </div>
 
 {{!-- Delete hidden form --}}
-<form method="POST" name="delete-article-form"></form>
+<form method="POST" name="delete-article-form" enctype="application/x-www-form-urlencoded">
+  <input type="hidden" name="_method" value="DELETE">
+</form>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -65,7 +67,7 @@
         });
 
         btnDeleteArticle.onclick = function() {
-            deleteForm.action = '/articles/' + articleId + '?_method=DELETE';
+            deleteForm.action = '/articles/' + articleId;
             deleteForm.submit();
         }
     })

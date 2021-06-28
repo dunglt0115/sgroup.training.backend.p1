@@ -1,6 +1,6 @@
 import express from 'express';
 import {AuthController} from './auth.controller';
-import {ValidateLogin} from './validator/login.validator';
+import {validateLoginRequest} from './validator/login.validator';
 import {notRequireAuth} from '../../middlewares/auth.middleware';
 import {Request, Response} from 'express';
 import SessionModel from '../../models/Sessions';
@@ -12,7 +12,7 @@ router.get('/login', notRequireAuth, (req: Request, res: Response) => {
     return res.render('login');
 });
 
-router.post('/login', ValidateLogin, AuthController.login);
+router.post('/login', validateLoginRequest, AuthController.login);
 
 // Page: Register
 router.get('/register', notRequireAuth, (req: Request, res: Response) => {

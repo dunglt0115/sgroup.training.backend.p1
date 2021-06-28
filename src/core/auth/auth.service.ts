@@ -16,7 +16,7 @@ class Service implements AuthService {
     async loginDefault(LoginDTO: ILoginDTO): Promise<string | null> {
         const user = await UserModel.findOne({email: LoginDTO.email});
         if (!user || !bcrypt.compareSync(LoginDTO.password, user.password)) {
-            return null;
+            return "wrong email";
         }
 
         const sessionFromDB = await this.sessionService.find({user: user._id});

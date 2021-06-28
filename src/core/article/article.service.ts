@@ -3,6 +3,16 @@ import {ArticleService} from './api/article.api';
 import ArticleModel from '../../models/Articles';
 
 class Service implements ArticleService {
+    async updateArticle(id: any, CreateDTO: IArticleDTO): Promise<void> {
+        await ArticleModel.updateOne(id, CreateDTO);
+        return;
+    }
+    
+    async hardDeleteArticle(id: any): Promise<void> {
+        await ArticleModel.deleteOne(id);
+        return;
+    }
+
     async createNewArticle(CreateDTO: IArticleDTO): Promise<void> {
         const existedArticle = await ArticleModel.findOne({name: CreateDTO.name});
 

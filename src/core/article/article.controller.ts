@@ -10,8 +10,7 @@ class Controller {
         this.articleService = articleService;
     }
 
-    // Create new article
-    store = async (req: Request, res: Response) => {
+    create = async (req: Request, res: Response) => {
         try {
             await this.articleService.createNewArticle(req.body);
         } catch (error) {
@@ -25,24 +24,28 @@ class Controller {
         });
     }
 
-    // Edit article
-    update = async (req: Request, res: Response) => {
+    updateById = async (req: Request, res: Response) => {
         try {
-            await ArticleModel.updateOne({_id: req.params.id}, req.body);
-            return res.redirect('/me/stored/articles');
+            await this.articleService.updateArticle({_id: req.params.id}, req.body);
         } catch (error) {
-            console.log(error);
+            return res.render('error', {
+                errs: [error]
+            });
         }
+
+        return res.redirect('/me/stored/articles');
     }
 
-    // Delete article by id
-    delete = async (req: Request, res: Response) => {
+    deleteById = async (req: Request, res: Response) => {
         try {
-            await ArticleModel.deleteOne({_id: req.params.id});
-            return res.redirect('back');
+            await this.articleService.hardDeleteArticle({_id: req.params.id});
         } catch (error) {
-            console.log(error);
+            return res.render('error', {
+                errs: [error]
+            });
         }
+
+        return res.redirect('back');
     }
 }
 

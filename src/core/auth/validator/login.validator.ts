@@ -1,29 +1,35 @@
 import {NextFunction, Request, Response} from 'express';
 import {ILoginDTO} from '../dto/login.dto';
+import Joi from 'joi';
 
-export function ValidateLogin(req: Request, res: Response, next: NextFunction) {
-    const body: ILoginDTO = req.body;
-    const errs: string[] = [];
+const loginSchema = Joi.object({
+    email: Joi.string()
+        .email({
+            minDomainSegments: 2,
+            tlds: { allow: ['com'] }
+        })
+        .required(),
+    password: Joi.string().min(6).required(),
+});
 
-    if (!body.email) {
-        errs.push('Enter your email!');
-    } else if (!body?.email.match(/\S+@\S+\.\S+/)) {
-        errs.push('Wrong email format!');
-    }
+export function validateLoginRequest(req: Request, res: Response, next: NextFunction) {
+    let body: ILoginDTO = req.body;
 
-    if (!body.password) {
-        errs.push('Enter your password!');
-    } else if (!body?.password.match(/^.{6,}/)) {
-        errs.push('Wrong password!');
-    }
+    const options = {
+        abortEarly: false,
+        allowUnknown: true,
+        stripUnknown: true
+    };
+    
+    const { error, value } = loginSchema.validate(body, options);
 
-    if (errs.length > 0) {
-        res.render('login', {
-            errs: errs,
+    if (error) {
+        return res.render('login', {
+            errs: [`Validation error: ${error.details.map(i => i.message).join(', ')}`],
             values: body
         });
-        return;
+    } else {
+        body = value;
+        return next();
     }
-
-    return next();
 }

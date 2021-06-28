@@ -1,7 +1,6 @@
-const image = document.getElementById("image");
 const previewImg = document.getElementById('preview');
 
-document.getElementById("image").addEventListener("change", async function(e) {
+document.getElementById("image").addEventListener("change", async function() {
     const form = new FormData();
     form.append('image', this.files[0]);
 
@@ -25,25 +24,30 @@ document.getElementById("image").addEventListener("change", async function(e) {
 document.getElementById("newBook").addEventListener("submit", async function(e) {
     e.preventDefault();
     
-    const name = document.getElementById("name");
-    const description = document.getElementById("description");
-    
-    const formData = new FormData();
-    formData.append('name', name.value);
-    formData.append('description', description.value);
-    formData.append('image', previewImg.src);
+    const name = document.getElementById("name").value;
+    const description = document.getElementById("description").value;
+    const image = previewImg.src;
 
-    const url = 'http://localhost:3000/articles/store';
+    const url = 'http://localhost:3000/articles/create';
     const options = {
         method: 'POST',
-        body: formData,
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'credentials': 'include',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name,
+            description,
+            image,
+        }),
     }
 
     const response = await fetch(url, options);
     
     if (!response.ok) {
-        alert('Error');
-        return location.href = 'http://localhost:3000/articles/create';
+        alert('Error!');
+        return location.href = 'http://localhost:3000/articles/new';
     } else {
         return location.href = "http://localhost:3000/";
     }

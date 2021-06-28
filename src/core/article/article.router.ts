@@ -3,16 +3,15 @@ import {Request, Response} from 'express';
 import {ArticleController} from './article.controller';
 import {mongooseToObject} from '../../utils/mongoose';
 import ArticleModel from '../../models/Articles';
-import {multerUploader} from '../../middlewares/multer.middleware';
 
 const router = express.Router();
 
 // Page: Add new article
-router.get('/create', (req: Request, res: Response) => {
+router.get('/new', (req: Request, res: Response) => {
     return res.render('articles/create');
 });
 
-router.post('/store', multerUploader, ArticleController.store);
+router.post('/create', ArticleController.create);
 
 // Page: Edit article
 router.get('/:id/edit', async (req: Request, res: Response) => {
@@ -26,8 +25,8 @@ router.get('/:id/edit', async (req: Request, res: Response) => {
     }
 });
 
-router.put('/:id', ArticleController.update);
-router.delete('/:id', ArticleController.delete);
+router.put('/:id', ArticleController.updateById);
+router.delete('/:id', ArticleController.deleteById);
 
 // Page: Detail
 router.get('/:slug', async (req: Request, res: Response) => {

@@ -10,17 +10,17 @@ class Controller {
         this.authService = authService;
     }
 
-    // Login
     login = async (req: Request, res: Response) => {
-        const errs: string[] = [];
-
         try {
             const sessionId = await this.authService.loginDefault(req.body);
 
             if (!sessionId) {
-                errs.push('Someone is using this account.');
                 return res.render('login', {
-                    errs: errs
+                    errs: ['Someone is using this account!']
+                })
+            } else if (sessionId == "wrong email") {
+                return res.render('login', {
+                    errs: ['You have entered the wrong email!']
                 })
             }
 
@@ -31,14 +31,12 @@ class Controller {
             });
             return res.redirect('/');
         } catch (error) {
-            errs.push(error);
             return res.render('error', {
-                errs: errs
+                errs: [error]
             });
         }
     }
 
-    // Register
     create = async (req: Request, res: Response) => {
         const errs: string[] = [];
         try {

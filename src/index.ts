@@ -1,6 +1,7 @@
 // Import
 import {envConfig} from './env';
 import express from 'express';
+import {Request, Response} from 'express';
 import handlebars from 'express-handlebars';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
@@ -15,18 +16,16 @@ app.use(express.static('public'));
 app.use(cookieParser(envConfig.get('COOKIE_SECRET')));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use(methodOverride('_method'));
 
-// Custom function for getter
-// enctype="application/x-www-form-urlencoded"
-// const getter = function(req, res) {
-//     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-//         const method = req.body._method;
-//         delete req.body._method;
-//         return method;
-//     }
-// };
-// app.use(methodOverride(getter));
+// Custom function for method override
+const getter = function(req: Request, res: Response) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+        const method = req.body._method;
+        delete req.body._method;
+        return method;
+    }
+};
+app.use(methodOverride(getter));
 
 app.engine('.hbs', handlebars({
     extname: '.hbs',
