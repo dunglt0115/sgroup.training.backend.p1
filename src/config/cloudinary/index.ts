@@ -8,4 +8,4 @@ v2.config({
     secure: true,
 });
 
-export const cloudinary = v2.uploader;
+export const cloudinary = v2;

@@ -1,4 +1,7 @@
+const fileInput = document.getElementById('image');
 const previewImg = document.getElementById('preview');
+const reUploadForm = document.getElementById('reUploadForm');
+const reUploadBtn = document.getElementById('reUploadBtn');
 
 document.getElementById("image").addEventListener("change", async function() {
     const form = new FormData();
@@ -16,10 +19,38 @@ document.getElementById("image").addEventListener("change", async function() {
         alert('Upload failed!');
     } else {
         const {src} = await response.json();
+
         previewImg.src = src;
         previewImg.style.height = '144px';
         previewImg.style.width = '100px';
+        previewImg.style.display = 'block';
+
+        fileInput.disabled = true;
+        reUploadForm.style.display = 'block';
+        
         return;
+    }
+});
+
+reUploadBtn.addEventListener('click', async function() {
+    const form = new FormData();
+    form.append('image', fileInput.files[0]);
+
+    const url = 'http://localhost:3000/media/deleteone';
+    const options = {
+        method: 'POST',
+        body: form,
+    }
+
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+        alert('Error');
+    } else {
+        fileInput.disabled = false;
+        reUploadForm.style.display = 'none';
+        previewImg.src = '';
+        previewImg.style.display = 'none';
     }
 });
 

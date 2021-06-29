@@ -19,7 +19,7 @@ router.get('/register', notRequireAuth, (req: Request, res: Response) => {
     return res.render('register');
 });
 
-router.post('/create', AuthController.create);
+router.post('/create', AuthController.createNewAccount);
 
 // Logout
 router.get('/logout', async (req: Request, res: Response) => {

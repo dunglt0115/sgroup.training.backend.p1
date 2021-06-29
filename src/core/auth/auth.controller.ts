@@ -37,14 +37,12 @@ class Controller {
         }
     }
 
-    create = async (req: Request, res: Response) => {
-        const errs: string[] = [];
+    createNewAccount = async (req: Request, res: Response) => {
         try {
             await this.authService.register(req.body);
         } catch (error) {
-            errs.push(error);
             return res.render('error', {
-                errs: errs
+                errs: [error]
             });
         }
 
