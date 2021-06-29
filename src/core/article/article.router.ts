@@ -32,7 +32,7 @@ router.delete('/:id', ArticleController.deleteById);
 router.get('/:slug', async (req: Request, res: Response) => {
     const article = await ArticleModel.findOne({slug: req.params.slug});
     try {
-        return res.render('articles/show', {
+        return res.render('articles/detail', {
             article: mongooseToObject(article)
         })
     } catch (error) {
