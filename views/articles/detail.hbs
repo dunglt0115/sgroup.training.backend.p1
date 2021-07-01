@@ -4,25 +4,35 @@
             <h1 class="page-title">Book: {{article.name}}</h1>
             <p>Description: {{article.description}}</p>
 
-            <form id="uploadGalleryForm" enctype="multipart/form-data" style="display:block;">
+            <form id="uploadGalleryForm" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="image">Upload gallery</label>
-                    <input type="file" name="image" class="form-control-file" id="image">
+                    <label for="images">Upload your gallery (maximum: 10 images)</label>
+                    <input type="file" name="images" class="form-control-file" id="images" multiple>
                 </div>
-                <button type="submit" class="btn btn-primary">Add gallery</button>
-                <button type="button" class="btn btn-secondary" id="cancelUpload">Cancel</button>
+                <label for="galleryName"></label>
+                <input id="galleryName" name="galleryName" type="text" value="{{article.name}}" style="display:none;">
+
+                <div>
+                    <button type="submit" class="btn btn-primary">Upload gallery</button>
+                    <button type="button" class="btn btn-secondary" id="cancelUpload">Cancel upload</button>
+                </div>
             </form>
 
-            <div class="mt-4">
+            <form method="POST" enctype="application/x-www-form-urlencoded">
+                {{!-- <input type="hidden" name="_method" value="PUT"> --}}
+                <button type="submit" class="btn btn-info" id="saveGallery">Save gallery</button>
+            </form>
+
+            <div class="mt-4" id="galleryHandler">
                 <button type="button" class="btn btn-primary" id="updateGallery">Update gallery</button>
                 <button type="button" class="btn btn-warning" id="deleteGallery">Delete gallery</button>
             </div>
 
             <h3 class="gallery-title">Gallery</h3>
             <div class="row" id="gallery">
-                <a class="col-lg-3 col-md-4 col-6 my-3">
-                    <img src="https://unsplash.it/600.jpg?image=251" class="img-fluid card">
-                </a>
+                {{!-- <a class="col-lg-3 col-md-4 col-6 my-3">
+                    <img src="" class="img-fluid card">
+                </a> --}}
             </div>
         </div>
     </div>

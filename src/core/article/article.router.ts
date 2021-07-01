@@ -34,10 +34,12 @@ router.get('/:slug', async (req: Request, res: Response) => {
     try {
         return res.render('articles/detail', {
             article: mongooseToObject(article)
-        })
+        });
     } catch (error) {
         console.log(error);
     }
 });
+
+router.post('/:slug', ArticleController.addnewgallery);
 
 export default router;

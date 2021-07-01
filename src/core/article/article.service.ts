@@ -24,6 +24,10 @@ class Service implements ArticleService {
         await newArticle.save();
         return;
     }
+
+    async createNewGallery(): Promise<void> {
+        
+    }
 }
 
 export const ArticleServiceImpl = new Service();

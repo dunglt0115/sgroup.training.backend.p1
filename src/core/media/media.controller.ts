@@ -15,7 +15,7 @@ class Controller {
     uploadOne = async (req: Request, res: Response) => {
         if (!req.file) {
             return res.status(400).json({
-                message: 'Can not upload image!'
+                message: 'No image attached!'
             });
         } else {
             const imageName: string = req.file.originalname;
@@ -39,6 +39,30 @@ class Controller {
 
             return res.status(200).json({
                 message: 'Delete image file on cloudinary successfully!'
+            });
+        }
+    }
+
+    uploadMany = async (req: Request, res: Response) => {
+        try {
+            const imageFiles = req.files;
+                        
+            if (!imageFiles) {
+                return res.status(400).json({
+                    message: 'No image attached!'
+                });
+            }
+            
+            const name = req.body.galleryName;
+
+            const uploadResponse = await this.mediaService.uploadMany(imageFiles, name);
+
+            return res.status(200).json({
+                images: uploadResponse
+            })
+        } catch (error) {
+            return res.status(500).json({
+                message: error.message,
             });
         }
     }

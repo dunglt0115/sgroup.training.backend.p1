@@ -1,10 +1,11 @@
 import express from 'express';
-import { multerUploader } from './base/multer';
+import { multerUploadOne, multerUploadMany } from './base/multer';
 import { MediaController } from './media.controller';
 
 const router = express.Router();
 
-router.post('/uploadone', multerUploader, MediaController.uploadOne);
-router.post('/deleteone', multerUploader, MediaController.deleteOne);
+router.post('/uploadone', multerUploadOne, MediaController.uploadOne);
+router.post('/deleteone', multerUploadOne, MediaController.deleteOne);
+router.post('/uploadmany', multerUploadMany, MediaController.uploadMany);
 
 export default router;
