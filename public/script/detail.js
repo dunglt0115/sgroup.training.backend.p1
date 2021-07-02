@@ -6,15 +6,15 @@ const cancelUploadBtn = document.getElementById('cancelUpload');
 const saveGalleryBtn = document.getElementById('saveGallery');
 const deleteGalleryBtn = document.getElementById('deleteGallery');
 const updateGalleryBtn = document.getElementById('updateGallery');
+const galleryHandler = document.getElementById('galleryHandler');
 
 const imageGallery = document.querySelectorAll('#gallery');
 
 const detailPageHandler = {
-    cloudinaryUrls: [],
     previewGallery: function() {
         
     },
-    fetchData: async () => {
+    fetchUploadData: async () => {
         const form = new FormData();
         form.append('galleryName', galleryName);
         
@@ -32,7 +32,7 @@ const detailPageHandler = {
         } else {
             try {
                 const responseUrls = await response.json();
-                detailPageHandler.cloudinaryUrls.push(responseUrls);
+                console.log(responseUrls);
                 return;
             } catch (error) {
                 console.log('Error:', error);
@@ -50,20 +50,17 @@ const detailPageHandler = {
 
         // Toggle upload form
         if (document.querySelectorAll('#gallery a').length == 0) {
-            uploadGalleryForm.style.display = 'block';
             updateGalleryBtn.style.display = 'none';
-            deleteGalleryBtn.style.display = 'none';
             saveGalleryBtn.style.display = 'none';
-            cancelUploadBtn.style.display = 'none';
+            galleryHandler.style.display = 'none';
         } else {
             uploadGalleryForm.style.display = 'none';
-            updateGalleryBtn.style.display = 'block';
-            deleteGalleryBtn.style.display = 'block';
+            saveGalleryBtn.style.display = 'none';
+            galleryHandler.style.display = 'block';
         }
 
         updateGalleryBtn.onclick = () => {
-            updateGalleryBtn.style.display = 'none';
-            deleteGalleryBtn.style.display = 'none';
+            galleryHandler.style.display = 'none';
             uploadGalleryForm.style.display = 'block';
             saveGalleryBtn.style.display = 'block';
         }
@@ -77,36 +74,15 @@ const detailPageHandler = {
         })
 
         // When save gallery
-        saveGalleryBtn.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const firstIndexItem = this.cloudinaryUrls[0];
-            let gallery = firstIndexItem.images.map(url => url);
-
-            const response = await fetch(`${location.href}`, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'credentials': 'include',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    gallery
-                }),
-            })
-
-            if (!response.ok) {
-                alert('Error');
-                return;
-            } else {
-                alert('Succeed');
-                return;
-            }
-        })
+        saveGalleryBtn.onclick = () => {
+            location.reload();
+        }
 
         // When cancel upload
         cancelUploadBtn.onclick = () => {
             uploadGalleryForm.style.display = 'none';
+            saveGalleryBtn.style.display = 'none';
+            galleryHandler.style.display = 'block';
         }
     },
     start: function() {

@@ -25,8 +25,23 @@ class Service implements ArticleService {
         return;
     }
 
-    async createNewGallery(): Promise<void> {
-        
+    async createNewGallery(body: any): Promise<void> {
+        await ArticleModel.findOne({slug: body.slug}, function(err: any, docs: any) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Result : ", docs);
+            }
+        });
+
+        // if (!article) {
+        //     throw new Error('Error');
+        // }
+
+        // article.gallery = body.gallery;
+        // await article.save();
+
+        return;
     }
 }
 

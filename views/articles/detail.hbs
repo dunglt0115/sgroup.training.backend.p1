@@ -10,7 +10,7 @@
                     <input type="file" name="images" class="form-control-file" id="images" multiple>
                 </div>
                 <label for="galleryName"></label>
-                <input id="galleryName" name="galleryName" type="text" value="{{article.name}}" style="display:none;">
+                <input id="galleryName" name="galleryName" type="text" value="{{article.slug}}" style="display:none;">
 
                 <div>
                     <button type="submit" class="btn btn-primary">Upload gallery</button>
@@ -18,10 +18,9 @@
                 </div>
             </form>
 
-            <form method="POST" enctype="application/x-www-form-urlencoded">
-                {{!-- <input type="hidden" name="_method" value="PUT"> --}}
-                <button type="submit" class="btn btn-info" id="saveGallery">Save gallery</button>
-            </form>
+            <div class="mt-4">
+                <button type="button" class="btn btn-info" id="saveGallery">Save gallery</button>
+            </div>
 
             <div class="mt-4" id="galleryHandler">
                 <button type="button" class="btn btn-primary" id="updateGallery">Update gallery</button>
@@ -30,9 +29,11 @@
 
             <h3 class="gallery-title">Gallery</h3>
             <div class="row" id="gallery">
-                {{!-- <a class="col-lg-3 col-md-4 col-6 my-3">
-                    <img src="" class="img-fluid card">
-                </a> --}}
+                {{#each article.gallery}}
+                    <a class="col-lg-3 col-md-4 col-6 my-3">
+                        <img src="{{this}}" class="img-fluid card">
+                    </a>
+                {{/each}}
             </div>
         </div>
     </div>

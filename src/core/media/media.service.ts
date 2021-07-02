@@ -1,7 +1,7 @@
 import { MediaService } from "./api/media.api";
 import {cloudinary} from '../../config/cloudinary/index';
 import {unlinkSync} from 'fs';
-import { fstat } from "fs";
+import ArticleModel from "../../models/Articles";
 
 class Service implements MediaService {
     async uploadOne(file: string, name: string): Promise<string> {
@@ -41,6 +41,8 @@ class Service implements MediaService {
                 urls.push(imageUrl.secure_url);
                 unlinkSync(path);
             }
+
+            await ArticleModel.updateOne({slug: name}, {gallery: urls});
             
             return urls;
         } catch (error) {

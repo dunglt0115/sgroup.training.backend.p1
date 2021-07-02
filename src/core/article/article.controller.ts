@@ -12,7 +12,6 @@ class Controller {
 
     create = async (req: Request, res: Response) => {
         try {
-            console.log(req.body);
             await this.articleService.createNewArticle(req.body);
         } catch (error) {
             return res.render('error', {
@@ -27,7 +26,7 @@ class Controller {
 
     addnewgallery = async (req: Request, res: Response) => {
         try {
-            console.log(req.body);
+            await this.articleService.createNewGallery(req.body);
         } catch (error) {
             return res.render('error', {
                 errs: [error]
@@ -35,7 +34,7 @@ class Controller {
         }
 
         return res.status(200).json({
-            mesage: 'OK'
+            message: `OK`
         });
     }
 

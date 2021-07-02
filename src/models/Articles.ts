@@ -8,7 +8,7 @@ interface IArticle {
     name: string;
     description: string;
     image: string;
-    gallery: Array<string>;
+    gallery: string[];
     slug: string;
 }
 
@@ -17,9 +17,10 @@ const schema = new Schema<IArticle>({
     name: String,
     description: String,
     image: String,
-    gallery: [{
-        type: String,
-    }],
+    gallery: {
+        type: [String],
+        default: ["tech", "economy"]
+    },
     slug: {type: String, slug: 'name', unique: true}
 }, {
     timestamps: true
