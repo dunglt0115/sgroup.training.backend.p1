@@ -40,6 +40,4 @@ router.get('/:slug', async (req: Request, res: Response) => {
     }
 });
 
-// router.put('/:slug', ArticleController.addnewgallery);
-
 export default router;

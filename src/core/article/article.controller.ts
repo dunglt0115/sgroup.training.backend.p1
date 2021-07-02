@@ -24,20 +24,6 @@ class Controller {
         });
     }
 
-    addnewgallery = async (req: Request, res: Response) => {
-        try {
-            await this.articleService.createNewGallery(req.body);
-        } catch (error) {
-            return res.render('error', {
-                errs: [error]
-            });
-        }
-
-        return res.status(200).json({
-            message: `OK`
-        });
-    }
-
     updateById = async (req: Request, res: Response) => {
         try {
             await this.articleService.updateArticle({_id: req.params.id}, req.body);
