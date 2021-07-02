@@ -26,7 +26,9 @@ router.get('/:id/edit', async (req: Request, res: Response) => {
 });
 
 router.put('/:id', ArticleController.updateById);
-router.delete('/:id', ArticleController.deleteById);
+router.patch('/:id/restore', ArticleController.restoreById);
+router.delete('/:id', ArticleController.softDeleteById);
+router.delete('/:id/force', ArticleController.hardDeleteById);
 
 // Page: Detail
 router.get('/:slug', async (req: Request, res: Response) => {

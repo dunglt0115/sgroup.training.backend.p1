@@ -1,7 +1,7 @@
 <div class="mt-4">
 	<div>
-	    <h1>My Books</h1>
-		<a href="/me/trash/articles">Recycle Bin</a>
+		<a href="/me/stored/articles">Return to book list</a>
+	    <h1>Deleted Books</h1>
 	</div>
 
     <table class="table mt-4">
@@ -24,15 +24,14 @@
                 </td>
                 <td>{{this.description}}</td>
                 <td>
-                    <a href="/articles/{{this._id}}/edit" class="btn btn-link">Edit</a>
-                    <a href="" data-id="{{this._id}}" class="btn btn-link" data-toggle="modal" data-target="#delete-article-modal">Delete</a>
+                    <a href="" data-id="{{this._id}}" class="btn btn-link btn-restore">Restore</a>
+                    <a href="" data-id="{{this._id}}" class="btn btn-link" data-toggle="modal" data-target="#delete-article-modal">Force delete</a>
                 </td>
             </tr>
             {{else}}
             <tr>
 				<td colspan="5" class="text-center">
-					You have not added any books.
-					<a href="/articles/new">Click here to add one now</a>
+					Empty. Try to delete some books to fill this recycle bin :D
 				</td>
             </tr>
             {{/each}}
@@ -60,25 +59,38 @@
 	</div>
 </div>
 
-{{!-- Delete hidden form --}}
 <form method="POST" name="delete-article-form" enctype="application/x-www-form-urlencoded">
   	<input type="hidden" name="_method" value="DELETE">
+</form>
+
+<form method="POST" name="restore-article-form" enctype="application/x-www-form-urlencoded">
+  	<input type="hidden" name="_method" value="PATCH">
 </form>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let articleId;
         let deleteForm = document.forms["delete-article-form"];
-        const btnDeleteArticle = document.querySelector("#btn-delete-article");
+        let restoreForm = document.forms["restore-article-form"];
+        const deleteArticleBtn = document.querySelector("#btn-delete-article");
+        const restoreArticleBtn = $(".btn-restore");
 
         $('#delete-article-modal').on('show.bs.modal', function (event) {
             let button = $(event.relatedTarget);
             articleId = button.data('id');
         });
 
-        btnDeleteArticle.onclick = function() {
-            deleteForm.action = '/articles/' + articleId;
+        deleteArticleBtn.onclick = function() {
+            deleteForm.action = `/articles/${articleId}/force`;
             deleteForm.submit();
+        }
+
+        restoreArticleBtn.onclick = function(e) {
+            e.preventDefault();
+            let restoreArticleId = $(this).data('id');
+
+            restoreForm.action = `/articles/${restoreArticleId}/restore`;
+            restoreForm.submit();
         }
     })
 </script>

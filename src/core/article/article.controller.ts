@@ -36,13 +36,39 @@ class Controller {
         return res.redirect('/me/stored/articles');
     }
 
-    deleteById = async (req: Request, res: Response) => {
+    softDeleteById = async (req: Request, res: Response) => {
+        try {
+            await this.articleService.softDeleteArticle({_id: req.params.id});
+        } catch (error) {
+            return res.render('error', {
+                errs: [error]
+            });
+        }
+
+        return res.redirect('back');
+    }
+
+    restoreById = async (req: Request, res: Response) => {
+        try {
+            await this.articleService.restoreDeletedArticle({_id: req.params.id});
+        } catch (error) {
+            return res.render('error', {
+                errs: [error]
+            });
+        }
+
+        return res.status(200).json({
+            message: 'OK'
+        });
+    }
+
+    hardDeleteById = async (req: Request, res: Response) => {
         try {
             await this.articleService.hardDeleteArticle({_id: req.params.id});
         } catch (error) {
             return res.render('error', {
                 errs: [error]
-            });
+            })
         }
 
         return res.redirect('back');

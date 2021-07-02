@@ -8,8 +8,11 @@ class Service implements ArticleService {
         return;
     }
     
-    async hardDeleteArticle(id: any): Promise<void> {
-        await ArticleModel.deleteOne(id);
+    async softDeleteArticle(id: any): Promise<void> {
+        await ArticleModel.updateOne(id, {
+            deleted: true,
+            deletedAt: new Date(),
+        });
         return;
     }
 
@@ -22,6 +25,27 @@ class Service implements ArticleService {
 
         const newArticle = new ArticleModel(CreateDTO);
         await newArticle.save();
+        return;
+    }
+
+    async restoreDeletedArticle(id: any): Promise<void> {
+        // const article = await ArticleModel.findOne(id, function(err: any, docs: any) {
+        //     if (err) {
+        //         console.log(err);
+        //     } else {
+        //         console.log(docs);
+        //     }
+        // })
+        
+        await ArticleModel.updateOne(id, {
+            deleted: true,
+            deletedAt: new Date(),
+        });
+        return;
+    }
+
+    async hardDeleteArticle(id: any): Promise<void> {
+        await ArticleModel.deleteOne(id);
         return;
     }
 }
