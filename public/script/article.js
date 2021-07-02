@@ -2,8 +2,11 @@ const fileInput = document.getElementById('image');
 const previewImg = document.getElementById('preview');
 const reUploadForm = document.getElementById('reUploadForm');
 const reUploadBtn = document.getElementById('reUploadBtn');
+const submitBtn = document.getElementById('submitButton');
 
 document.getElementById("image").addEventListener("change", async function() {
+    submitButton.disabled = true;
+
     const form = new FormData();
     form.append('image', this.files[0]);
 
@@ -27,6 +30,7 @@ document.getElementById("image").addEventListener("change", async function() {
 
         fileInput.disabled = true;
         reUploadForm.style.display = 'block';
+        submitButton.disabled = false;
         
         return;
     }

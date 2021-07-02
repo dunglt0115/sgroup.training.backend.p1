@@ -18,7 +18,7 @@ router.use('/media', mediaRouter);
 
 // Home page
 router.get('/', requireAuth, async (req: Request, res: Response) => {
-    const articles = await Article.find({});
+    const articles = await Article.find({deleted: false});
     try {
         return res.render('home', {
             articles: mongoosesToObject(articles)
