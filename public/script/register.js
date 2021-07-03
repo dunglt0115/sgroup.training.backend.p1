@@ -31,6 +31,5 @@ document.getElementById("register").addEventListener("submit", function(e) {
             }
         });
 
-    location.href = "http://localhost:3000/auth/login";
-    return;
+    return location.href = "http://localhost:3000/auth/login";
 })

@@ -1,4 +1,4 @@
-import {Request, Response, NextFunction} from 'express';
+import {Request, Response} from 'express';
 import {MediaService} from './api/media.api';
 import {MediaServiceImpl} from './media.service';
 import path from 'path';
@@ -34,7 +34,7 @@ class Controller {
                 message: 'Error: Can not get image file!'
             });
         } else {
-            const imagePublicId: string = `one/${req.file.originalname}`;
+            const imagePublicId = `one/${req.file.originalname}`;
             await this.mediaService.deleteOne(imagePublicId);
 
             return res.status(200).json({
@@ -46,13 +46,13 @@ class Controller {
     uploadMany = async (req: Request, res: Response) => {
         try {
             const imageFiles = req.files;
-                        
+
             if (!imageFiles) {
                 return res.status(400).json({
                     message: 'No image attached!'
                 });
             }
-            
+
             const name = req.body.galleryName;
 
             const uploadResponse = await this.mediaService.uploadMany(imageFiles, name);
@@ -62,7 +62,7 @@ class Controller {
             })
         } catch (error) {
             return res.status(500).json({
-                message: error.message,
+                message: error.message
             });
         }
     }

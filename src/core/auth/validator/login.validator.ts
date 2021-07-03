@@ -6,10 +6,10 @@ const loginSchema = Joi.object({
     email: Joi.string()
         .email({
             minDomainSegments: 2,
-            tlds: { allow: ['com'] }
+            tlds: {allow: ['com']}
         })
         .required(),
-    password: Joi.string().min(6).required(),
+    password: Joi.string().min(6).required()
 });
 
 export function validateLoginRequest(req: Request, res: Response, next: NextFunction) {
@@ -20,8 +20,8 @@ export function validateLoginRequest(req: Request, res: Response, next: NextFunc
         allowUnknown: true,
         stripUnknown: true
     };
-    
-    const { error, value } = loginSchema.validate(body, options);
+
+    const {error, value} = loginSchema.validate(body, options);
 
     if (error) {
         return res.render('login', {

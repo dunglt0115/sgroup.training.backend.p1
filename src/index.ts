@@ -1,7 +1,7 @@
 // Import
 import {envConfig} from './env';
 import express from 'express';
-import {Request, Response} from 'express';
+import {Request} from 'express';
 import handlebars from 'express-handlebars';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 // Custom function for method override
-const getter = function(req: Request, res: Response) {
+const getter = function(req: Request) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
         const method = req.body._method;
         delete req.body._method;

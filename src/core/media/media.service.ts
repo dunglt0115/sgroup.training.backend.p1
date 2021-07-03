@@ -1,7 +1,7 @@
-import { MediaService } from "./api/media.api";
+import {MediaService} from './api/media.api';
 import {cloudinary} from '../../config/cloudinary/index';
 import {unlinkSync} from 'fs';
-import ArticleModel from "../../models/Articles";
+import ArticleModel from '../../models/Articles';
 
 class Service implements MediaService {
     async uploadOne(file: string, name: string): Promise<string> {
@@ -11,7 +11,7 @@ class Service implements MediaService {
             overwrite: true,
             invalidate: true
         });
-        
+
         return response.secure_url;
     }
 
@@ -28,7 +28,7 @@ class Service implements MediaService {
                 return 'Error!';
             }
 
-            let urls = [];
+            const urls = [];
 
             for (const file of files) {
                 const {path} = file;
@@ -43,7 +43,7 @@ class Service implements MediaService {
             }
 
             await ArticleModel.updateOne({slug: name}, {gallery: urls});
-            
+
             return urls;
         } catch (error) {
             console.log(error);

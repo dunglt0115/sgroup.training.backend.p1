@@ -7,11 +7,11 @@ class Service implements ArticleService {
         await ArticleModel.updateOne(id, CreateDTO);
         return;
     }
-    
+
     async softDeleteArticle(id: any): Promise<void> {
         await ArticleModel.updateOne(id, {
             deleted: true,
-            deletedAt: new Date(),
+            deletedAt: new Date()
         });
         return;
     }
@@ -36,10 +36,10 @@ class Service implements ArticleService {
         //         console.log(docs);
         //     }
         // })
-        
+
         await ArticleModel.updateOne(id, {
             deleted: true,
-            deletedAt: new Date(),
+            deletedAt: new Date()
         });
         return;
     }

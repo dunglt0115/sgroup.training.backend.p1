@@ -18,7 +18,7 @@ const schema = new Schema<IArticle>({
     image: String,
     gallery: {
         type: [String],
-        default: ["tech", "economy"]
+        default: ['tech', 'economy']
     },
     slug: {
         type: String,
@@ -27,12 +27,12 @@ const schema = new Schema<IArticle>({
     },
     deleted: {
         type: Boolean,
-        default: false,
+        default: false
     },
     deletedAt: {
         type: Date,
         default: null
-    },
+    }
 }, {
     timestamps: true
 });

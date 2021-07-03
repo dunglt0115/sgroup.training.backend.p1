@@ -1,6 +1,6 @@
 import express from 'express';
-import { multerUploadOne, multerUploadMany } from './base/multer';
-import { MediaController } from './media.controller';
+import {multerUploadOne, multerUploadMany} from './base/multer';
+import {MediaController} from './media.controller';
 
 const router = express.Router();
 

@@ -1,10 +1,12 @@
 import {ILoginDTO} from './dto/login.dto';
+import {IUserInfo, UserInfo} from './dto/userInfo.dto';
 import {AuthService} from './api/auth.api';
 import UserModel from '../../models/Users';
 import bcrypt from 'bcrypt';
 import {SessionService} from '../session/api/session.api';
 import {SessionServiceImpl} from '../session/session.service';
 import {envConfig} from '../../env';
+import jwt from 'jsonwebtoken';
 
 class Service implements AuthService {
     private sessionService: SessionService;
@@ -13,10 +15,27 @@ class Service implements AuthService {
         this.sessionService = sessionService;
     }
 
+    async loginWithoutSession(LoginDTO: ILoginDTO): Promise<{info: IUserInfo, accessToken: string}> {
+        const user = await UserModel.findOne({
+            email: LoginDTO.email
+        });
+
+        if (!user || !bcrypt.compareSync(LoginDTO.password, user.password)) {
+            throw new Error('Email or password is not correct');
+        }
+
+        const info = UserInfo(user);
+
+        return {
+            info,
+            accessToken: jwt.sign({_id: info._id}, envConfig.get('JWT_SECRET'))
+        };
+    }
+
     async loginDefault(LoginDTO: ILoginDTO): Promise<string | null> {
         const user = await UserModel.findOne({email: LoginDTO.email});
         if (!user || !bcrypt.compareSync(LoginDTO.password, user.password)) {
-            return "wrong email";
+            return 'wrong email';
         }
 
         const sessionFromDB = await this.sessionService.find({user: user._id});
@@ -37,10 +56,12 @@ class Service implements AuthService {
 
         if (sessionTime > 0) { // Session timeout
             await this.sessionService.deleteOne({user: user._id});
+
             const session = await this.sessionService.create({
                 user: user._id,
                 expired: Date.now() + Number.parseInt(envConfig.get('SESSION_EXPIRED'))
             });
+
             return session._id;
         } else {
             return null;
