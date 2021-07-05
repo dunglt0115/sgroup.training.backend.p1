@@ -1,10 +1,40 @@
 import {IArticleDTO} from './dto/article.dto';
 import {ArticleService} from './api/article.api';
 import ArticleModel from '../../models/Articles';
+import UserModel from '../../models/Users';
 
 class Service implements ArticleService {
-    async updateArticle(id: any, CreateDTO: IArticleDTO): Promise<void> {
-        await ArticleModel.updateOne(id, CreateDTO);
+
+
+    async createNewArticle(userId: string, CreateDTO: IArticleDTO): Promise<void> {
+        const existedArticle = await ArticleModel.findOne({name: CreateDTO.name});
+
+        if (existedArticle) {
+            throw new Error('This book has already been created');
+        }
+
+        const user = await UserModel.findOne({_id: userId});
+
+        if (!user) {
+            throw new Error('This user is not valid');
+        }
+
+        const newArticle = new ArticleModel({
+            name: CreateDTO.name,
+            description: CreateDTO.description,
+            image: CreateDTO.image,
+            user: user._id
+        });
+        
+        await newArticle.save();
+        return;
+    }
+
+    async updateArticle(body: any): Promise<void> {
+        await ArticleModel.updateOne({slug: body.slug}, {
+            name: body.name,
+            description: body.description
+        });
         return;
     }
 
@@ -16,31 +46,19 @@ class Service implements ArticleService {
         return;
     }
 
-    async createNewArticle(CreateDTO: IArticleDTO): Promise<void> {
-        const existedArticle = await ArticleModel.findOne({name: CreateDTO.name});
+    async restoreDeletedArticle(body: any): Promise<void> {
+        await ArticleModel.findOne({_id: body.id}, function(err: any, docs: any) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(docs);
+            }
+        })
 
-        if (existedArticle) {
-            throw new Error('This book has already been created');
-        }
-
-        const newArticle = new ArticleModel(CreateDTO);
-        await newArticle.save();
-        return;
-    }
-
-    async restoreDeletedArticle(id: any): Promise<void> {
-        // const article = await ArticleModel.findOne(id, function(err: any, docs: any) {
-        //     if (err) {
-        //         console.log(err);
-        //     } else {
-        //         console.log(docs);
-        //     }
-        // })
-
-        await ArticleModel.updateOne(id, {
-            deleted: true,
-            deletedAt: new Date()
-        });
+        // await ArticleModel.updateOne(id, {
+        //     deleted: true,
+        //     deletedAt: new Date()
+        // });
         return;
     }
 

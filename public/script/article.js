@@ -64,11 +64,13 @@ document.getElementById("newBook").addEventListener("submit", async function(e) 
     const name = document.getElementById("name").value;
     const description = document.getElementById("description").value;
     const image = previewImg.src;
+    const user = JSON.parse(localStorage.getItem('user'));
 
     const url = 'http://localhost:3000/articles/create';
     const options = {
         method: 'POST',
         headers: {
+            'authorization': 'Bearer ' + user.userInfo.accessToken,
             'Accept': 'application/json, text/plain, */*',
             'credentials': 'include',
             'Content-Type': 'application/json'

@@ -3,6 +3,7 @@ import {Request, Response} from 'express';
 import {ArticleController} from './article.controller';
 import {mongooseToObject} from '../../utils/mongoose';
 import ArticleModel from '../../models/Articles';
+import {JwtAuthenticator} from '../auth/guard/jwtAutheticator.guard';
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router.get('/new', (req: Request, res: Response) => {
     return res.render('articles/create');
 });
 
-router.post('/create', ArticleController.create);
+router.post('/create', JwtAuthenticator.getInstance().getAuthenticator, ArticleController.create);
 
 // Page: Edit article
 router.get('/:id/edit', async (req: Request, res: Response) => {
@@ -25,7 +26,7 @@ router.get('/:id/edit', async (req: Request, res: Response) => {
     }
 });
 
-router.put('/:id', ArticleController.updateById);
+router.patch('/update', ArticleController.updateById);
 router.patch('/:id/restore', ArticleController.restoreById);
 router.delete('/:id', ArticleController.softDeleteById);
 router.delete('/:id/force', ArticleController.hardDeleteById);

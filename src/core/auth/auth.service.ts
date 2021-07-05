@@ -7,6 +7,7 @@ import {SessionService} from '../session/api/session.api';
 import {SessionServiceImpl} from '../session/session.service';
 import {envConfig} from '../../env';
 import jwt from 'jsonwebtoken';
+import {JwtAuthContext} from './guard/jwtAutheticator.guard';
 
 class Service implements AuthService {
     private sessionService: SessionService;
@@ -28,7 +29,10 @@ class Service implements AuthService {
 
         return {
             info,
-            accessToken: jwt.sign({_id: info._id}, envConfig.get('JWT_SECRET'))
+            accessToken: jwt.sign({
+                _id: info._id,
+                roles: []
+            } as JwtAuthContext, envConfig.get('JWT_SECRET'))
         };
     }
 

@@ -1,7 +1,8 @@
-import ArticleModel from '../../models/Articles';
 import {Request, Response} from 'express';
 import {ArticleService} from './api/article.api';
 import {ArticleServiceImpl} from './article.service';
+import {CreateDTO} from './dto/article.dto';
+import {AuthenticatedRequest} from '../auth/guard/jwtAutheticator.guard';
 
 class Controller {
     private articleService: ArticleService;
@@ -12,10 +13,14 @@ class Controller {
 
     create = async (req: Request, res: Response) => {
         try {
-            await this.articleService.createNewArticle(req.body);
+            await this.articleService.createNewArticle(
+                (req as AuthenticatedRequest)['user']['_id'],
+                CreateDTO(req.body)
+            );
         } catch (error) {
-            return res.render('error', {
-                errs: [error]
+            return res.status(400).json({
+                message: error.message,
+                trace: error.trace
             })
         }
 
@@ -26,14 +31,16 @@ class Controller {
 
     updateById = async (req: Request, res: Response) => {
         try {
-            await this.articleService.updateArticle({_id: req.params.id}, req.body);
+            await this.articleService.updateArticle(req.body);
+            return res.status(200).json({
+                message: 'Updated successfully'
+            });
         } catch (error) {
-            return res.render('error', {
-                errs: [error]
+            return res.status(400).json({
+                message: error.message,
+                trace: error.trace
             });
         }
-
-        return res.redirect('/me/stored/articles');
     }
 
     softDeleteById = async (req: Request, res: Response) => {
@@ -50,7 +57,7 @@ class Controller {
 
     restoreById = async (req: Request, res: Response) => {
         try {
-            await this.articleService.restoreDeletedArticle({_id: req.params.id});
+            await this.articleService.restoreDeletedArticle(req.body);
         } catch (error) {
             return res.render('error', {
                 errs: [error]

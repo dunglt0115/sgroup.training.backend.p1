@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
-import {Schema, model} from 'mongoose';
+import {Schema, model, Types} from 'mongoose';
 const slug = require('mongoose-slug-generator');
 
-interface IArticle {
+export interface IArticle {
     name: string;
     description: string;
     image: string;
+    user: Types.ObjectId;
     gallery: string[];
     slug: string;
     deleted: boolean;
@@ -16,6 +17,10 @@ const schema = new Schema<IArticle>({
     name: String,
     description: String,
     image: String,
+    user: {
+        ref: 'users',
+        type: Types.ObjectId
+    },
     gallery: {
         type: [String],
         default: ['tech', 'economy']
