@@ -90,6 +90,22 @@ class Controller {
             message: 'OK'
         });
     }
+
+    handleFormActions = async (req: Request, res: Response) => {
+        try {
+            await this.articleService.archievePageActionHandler(req.body);
+        } catch (error) {
+            return res.status(400).json({
+                message: error.message,
+                trace: error.trace,
+                stack: error.stack
+            });
+        }
+
+        return res.status(200).json({
+            message: 'OK'
+        });
+    }
 }
 
 export const ArticleController = new Controller(ArticleServiceImpl);

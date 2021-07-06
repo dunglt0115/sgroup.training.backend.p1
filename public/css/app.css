@@ -1,18 +1,23 @@
 .article-item {
-  margin-top: 10px;
+  	margin-top: 10px;
 }
 
 .preview-image {
-  margin-top: 10px;
+  	margin-top: 10px;
 }
 
 .ekko-lightbox-nav-overlay a {
-  color: goldenrod;
+  	color: goldenrod;
 }
 
 .gallery-title {
-  text-align: center;
-  font-weight: 500;
-  border-bottom: 1px dotted orange;
-  margin-top: 1em;
+	text-align: center;
+	font-weight: 500;
+	border-bottom: 1px dotted orange;
+	margin-top: 1em;
+}
+
+.checkbox-select-all-options {
+	width: 160px;
+	margin: 0 16px;
 }

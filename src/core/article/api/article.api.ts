@@ -6,4 +6,5 @@ export interface ArticleService {
     softDeleteArticle(id: any): Promise<void>;
     restoreDeletedArticle(id: any): Promise<void>;
     hardDeleteArticle(id: any): Promise<void>;
+    archievePageActionHandler(body: any): Promise<void>;
 }

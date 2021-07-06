@@ -26,6 +26,7 @@ router.get('/:id/edit', async (req: Request, res: Response) => {
     }
 });
 
+router.post('/archieve-page-handle-form', ArticleController.handleFormActions);
 router.patch('/update', ArticleController.updateById);
 router.patch('/:id/restore', ArticleController.restoreById);
 router.delete('/:id', ArticleController.softDeleteById);

@@ -2,6 +2,8 @@ import {IArticleDTO} from './dto/article.dto';
 import {ArticleService} from './api/article.api';
 import ArticleModel from '../../models/Articles';
 import UserModel from '../../models/Users';
+import mongoose from 'mongoose';
+import {Types} from 'mongoose';
 
 class Service implements ArticleService {
     async createNewArticle(userId: string, CreateDTO: IArticleDTO): Promise<void> {
@@ -54,6 +56,24 @@ class Service implements ArticleService {
 
     async hardDeleteArticle(id: any): Promise<void> {
         await ArticleModel.deleteOne(id);
+        return;
+    }
+
+    async archievePageActionHandler(body: any): Promise<void> {
+        switch (body.actions) {
+            case 'delete':
+                body.articleIds.forEach(async (id: string) => {
+                    await ArticleModel.updateOne({_id: mongoose.Types.ObjectId(id)}, {
+                        deleted: true,
+                        deletedAt: new Date()
+                    });
+                });
+
+                break;
+            default:
+                throw new Error('Invalid action');
+        }
+
         return;
     }
 }
