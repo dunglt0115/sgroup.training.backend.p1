@@ -76,6 +76,28 @@ class Service implements ArticleService {
 
         return;
     }
+
+    async trashPageActionHandler(body: any): Promise<void> {
+        switch (body.actions) {
+            case 'restore':
+                body.articleIds.forEach(async (id: string) => {
+                    await ArticleModel.updateOne({_id: mongoose.Types.ObjectId(id)}, {
+                        deleted: false,
+                        deletedAt: undefined
+                    });
+                });
+                break;
+            case 'delete':
+                body.articleIds.forEach(async (id: string) => {
+                    await ArticleModel.deleteOne({_id: mongoose.Types.ObjectId(id)});
+                });
+                break;
+            default:
+                throw new Error('Invalid action');
+        }
+
+        return;
+    }
 }
 
 export const ArticleServiceImpl = new Service();

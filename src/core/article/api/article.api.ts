@@ -7,4 +7,5 @@ export interface ArticleService {
     restoreDeletedArticle(id: any): Promise<void>;
     hardDeleteArticle(id: any): Promise<void>;
     archievePageActionHandler(body: any): Promise<void>;
+    trashPageActionHandler(body: any): Promise<void>;
 }

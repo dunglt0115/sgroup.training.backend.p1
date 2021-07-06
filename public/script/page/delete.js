@@ -35,6 +35,15 @@ document.addEventListener("DOMContentLoaded", function() {
         renderCheckboxAllSubmitBtn();
     });
 
+    function renderCheckboxAllSubmitBtn() {
+        let checkedCount = $('input[name="articleIds[]"]:checked').length;
+        if (checkedCount > 0) {
+            checkAllSubmitBtn.attr('disabled', false);
+        } else {
+            checkAllSubmitBtn.attr('disabled', true);
+        }
+    }
+
     containerForm.on('submit', async function(e) {
         e.preventDefault();
 
@@ -65,13 +74,4 @@ document.addEventListener("DOMContentLoaded", function() {
             return location.reload();
         }
     })
-
-    function renderCheckboxAllSubmitBtn() {
-        let checkedCount = $('input[name="articleIds[]"]:checked').length;
-        if (checkedCount > 0) {
-            checkAllSubmitBtn.attr('disabled', false);
-        } else {
-            checkAllSubmitBtn.attr('disabled', true);
-        }
-    }
 });

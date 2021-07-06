@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
     let articleId;
     const deleteArticleBtn = document.querySelector("#btn-delete-article");
-    const restoreForm = document.querySelectorAll(".restore-form");
+    const restoreBtns = document.querySelectorAll(".restore-btn");
+    const checkboxAll = $('#checkboxAll');
+    const articleItemCheckbox = $('input[name="articleIds[]"]');
+    const checkAllSubmitBtn = $('.check-all-submit-btn');
+    const containerForm = $('#containerForm');
 
     $('#delete-article-modal').on('show.bs.modal', function (event) {
         let button = $(event.relatedTarget);
@@ -20,10 +24,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    restoreForm.forEach(form => {
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const restoreArticleId = $(this).data('id');
+    restoreBtns.forEach(item => {
+        item.onclick = async () => {
+            const restoreArticleId = item.placeholder;
 
             const response = await fetch(`http://localhost:3000/articles/${restoreArticleId}/restore`, {
                 method: 'PATCH'
@@ -34,6 +37,74 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 return location.reload();
             }
+        }
+    })
+
+    restoreBtns.forEach(item => {
+        item.onclick = async () => {
+            const restoreArticleId = item.placeholder;
+            
+            const response = await fetch(`http://localhost:3000/articles/${restoreArticleId}/restore`, {
+                method: 'PATCH'
+            });
+
+            if (!response.ok) {
+                alert('Error');
+            } else {
+                return location.reload();
+            }
+        }
+    })
+
+    checkboxAll.change(function() {
+        let isCheckedAll = $(this).prop('checked');
+        articleItemCheckbox.prop('checked', isCheckedAll);
+        renderCheckboxAllSubmitBtn();
+    });
+
+    articleItemCheckbox.change(function() {
+        let isCheckedAll = articleItemCheckbox.length === $('input[name="articleIds[]"]:checked').length;
+        checkboxAll.prop('checked', isCheckedAll);
+        renderCheckboxAllSubmitBtn();
+    });
+
+    function renderCheckboxAllSubmitBtn() {
+        let checkedCount = $('input[name="articleIds[]"]:checked').length;
+        if (checkedCount > 0) {
+            checkAllSubmitBtn.attr('disabled', false);
+        } else {
+            checkAllSubmitBtn.attr('disabled', true);
+        }
+    }
+
+    containerForm.on('submit', async function(e) {
+        e.preventDefault();
+
+        const actions = document.getElementById('selectActions').value;
+        const checkboxIds = document.querySelectorAll('#articleIds input');
+        let articleIds = [];
+        
+        checkboxIds.forEach(item => {
+            articleIds.push(item.value);
         })
+
+        const response = await fetch('http://localhost:3000/articles/trash-page-handle-form', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'credentials': 'include',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                actions,
+                articleIds,
+            }),
+        })
+
+        if (!response.ok) {
+            alert('Error');
+        } else {
+            return location.reload();
+        }
     })
 })
