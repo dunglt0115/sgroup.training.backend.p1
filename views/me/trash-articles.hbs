@@ -24,7 +24,10 @@
                 </td>
                 <td>{{this.description}}</td>
                 <td>
-                    <a href="" data-id="{{this._id}}" class="btn btn-link btn-restore">Restore</a>
+                    <form method="POST" class="restore-form" enctype="application/x-www-form-urlencoded" data-id="{{this._id}}">
+                        <input type="hidden" name="_method" value="PATCH">
+                        <button type="submit" class="btn btn-link">Restore</button>
+                    </form>
                     <a href="" data-id="{{this._id}}" class="btn btn-link" data-toggle="modal" data-target="#delete-article-modal">Force delete</a>
                 </td>
             </tr>
@@ -63,34 +66,4 @@
   	<input type="hidden" name="_method" value="DELETE">
 </form>
 
-<form method="POST" name="restore-article-form" enctype="application/x-www-form-urlencoded">
-  	<input type="hidden" name="_method" value="PATCH">
-</form>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let articleId;
-        let deleteForm = document.forms["delete-article-form"];
-        let restoreForm = document.forms["restore-article-form"];
-        const deleteArticleBtn = document.querySelector("#btn-delete-article");
-        const restoreArticleBtn = $(".btn-restore");
-
-        $('#delete-article-modal').on('show.bs.modal', function (event) {
-            let button = $(event.relatedTarget);
-            articleId = button.data('id');
-        });
-
-        deleteArticleBtn.onclick = function() {
-            deleteForm.action = `/articles/${articleId}/force`;
-            deleteForm.submit();
-        }
-
-        restoreArticleBtn.onclick = function(e) {
-            e.preventDefault();
-            let restoreArticleId = $(this).data('id');
-
-            restoreForm.action = `/articles/${restoreArticleId}/restore`;
-            restoreForm.submit();
-        }
-    })
-</script>
+<script src="/script/page/trash.js"></script>

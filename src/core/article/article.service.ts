@@ -4,8 +4,6 @@ import ArticleModel from '../../models/Articles';
 import UserModel from '../../models/Users';
 
 class Service implements ArticleService {
-
-
     async createNewArticle(userId: string, CreateDTO: IArticleDTO): Promise<void> {
         const existedArticle = await ArticleModel.findOne({name: CreateDTO.name});
 
@@ -25,7 +23,7 @@ class Service implements ArticleService {
             image: CreateDTO.image,
             user: user._id
         });
-        
+
         await newArticle.save();
         return;
     }
@@ -46,19 +44,11 @@ class Service implements ArticleService {
         return;
     }
 
-    async restoreDeletedArticle(body: any): Promise<void> {
-        await ArticleModel.findOne({_id: body.id}, function(err: any, docs: any) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(docs);
-            }
-        })
-
-        // await ArticleModel.updateOne(id, {
-        //     deleted: true,
-        //     deletedAt: new Date()
-        // });
+    async restoreDeletedArticle(id: any): Promise<void> {
+        await ArticleModel.updateOne(id, {
+            deleted: false,
+            deletedAt: undefined
+        });
         return;
     }
 

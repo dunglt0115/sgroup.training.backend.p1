@@ -60,26 +60,9 @@
 	</div>
 </div>
 
-{{!-- Delete hidden form --}}
 <form method="POST" name="delete-article-form" enctype="application/x-www-form-urlencoded">
   	<input type="hidden" name="_method" value="DELETE">
 </form>
 
-<script src="/script/private.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let articleId;
-        let deleteForm = document.forms["delete-article-form"];
-        const btnDeleteArticle = document.querySelector("#btn-delete-article");
-
-        $('#delete-article-modal').on('show.bs.modal', function (event) {
-            let button = $(event.relatedTarget);
-            articleId = button.data('id');
-        });
-
-        btnDeleteArticle.onclick = function() {
-            deleteForm.action = '/articles/' + articleId;
-            deleteForm.submit();
-        }
-    })
-</script>
+<script src="/script/auth/private.js"></script>
+<script src="/script/page/delete.js"></script>

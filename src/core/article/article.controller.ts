@@ -21,7 +21,7 @@ class Controller {
             return res.status(400).json({
                 message: error.message,
                 trace: error.trace
-            })
+            });
         }
 
         return res.status(200).json({
@@ -47,20 +47,26 @@ class Controller {
         try {
             await this.articleService.softDeleteArticle({_id: req.params.id});
         } catch (error) {
-            return res.render('error', {
-                errs: [error]
+            return res.status(400).json({
+                message: error.message,
+                trace: error.trace,
+                stack: error.stack
             });
         }
 
-        return res.redirect('back');
+        return res.status(200).json({
+            message: 'OK'
+        });
     }
 
     restoreById = async (req: Request, res: Response) => {
         try {
-            await this.articleService.restoreDeletedArticle(req.body);
+            await this.articleService.restoreDeletedArticle({_id: req.params.id});
         } catch (error) {
-            return res.render('error', {
-                errs: [error]
+            return res.status(400).json({
+                message: error.message,
+                trace: error.trace,
+                stack: error.stack
             });
         }
 
@@ -73,12 +79,16 @@ class Controller {
         try {
             await this.articleService.hardDeleteArticle({_id: req.params.id});
         } catch (error) {
-            return res.render('error', {
-                errs: [error]
-            })
+            return res.status(400).json({
+                message: error.message,
+                trace: error.trace,
+                stack: error.stack
+            });
         }
 
-        return res.redirect('back');
+        return res.status(200).json({
+            message: 'OK'
+        });
     }
 }
 
