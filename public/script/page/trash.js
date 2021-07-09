@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
     checkboxAll.change(function() {
         let isCheckedAll = $(this).prop('checked');
         articleItemCheckbox.prop('checked', isCheckedAll);
+        articleItemCheckbox.toggleClass('isChecked');
         renderCheckboxAllSubmitBtn();
     });
 
@@ -66,6 +67,12 @@ document.addEventListener("DOMContentLoaded", function() {
         let isCheckedAll = articleItemCheckbox.length === $('input[name="articleIds[]"]:checked').length;
         checkboxAll.prop('checked', isCheckedAll);
         renderCheckboxAllSubmitBtn();
+    });
+
+    document.querySelectorAll('#articleIds input').forEach(item => {
+        item.addEventListener('change', function() {
+            item.classList.toggle('isChecked');
+        })
     });
 
     function renderCheckboxAllSubmitBtn() {
@@ -81,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
 
         const actions = document.getElementById('selectActions').value;
-        const checkboxIds = document.querySelectorAll('#articleIds input');
+        const checkboxIds = document.querySelectorAll('#articleIds .isChecked');
         let articleIds = [];
         
         checkboxIds.forEach(item => {
