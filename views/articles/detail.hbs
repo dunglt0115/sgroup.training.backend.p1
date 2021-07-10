@@ -13,18 +13,22 @@
                 <input id="galleryName" name="galleryName" type="text" value="{{article.slug}}" style="display:none;">
 
                 <div>
-                    <button type="submit" class="btn btn-primary">Upload gallery</button>
+                    <button type="submit" class="btn btn-primary" id="uploadBtn">Upload gallery</button>
                     <button type="button" class="btn btn-secondary" id="cancelUpload">Cancel upload</button>
                 </div>
             </form>
 
             <div class="mt-4">
-                <button type="button" class="btn btn-info" id="saveGallery">Save gallery</button>
+                <button type="button" class="btn btn-info" id="saveGallery" style="display:none;">Save gallery</button>
             </div>
 
-            <div class="mt-4" id="galleryHandler">
-                <button type="button" class="btn btn-primary" id="updateGallery">Update gallery</button>
-                <button type="button" class="btn btn-warning" id="deleteGallery">Delete gallery</button>
+            <div class="mt-4">
+                <button type="button" class="btn btn-primary" id="updateGallery" style="display:none;">Update gallery</button>
+            </div>
+
+            <div class="mt-4">
+                <button type="button" class="btn btn-primary" id="uploadNew" style="display:none;">Upload new gallery</button>
+                <button type="button" class="btn btn-secondary" id="updateCurrent" style="display:none;">Update current gallery</button>
             </div>
 
             <h3 class="gallery-title">Gallery</h3>
@@ -35,6 +39,36 @@
                     </a>
                 {{/each}}
             </div>
+
+            <form class="mt-4" id="containerForm" style="display:none;">
+                <h3>Preview Gallery</h3>
+
+                <div class="mt-4 d-flex align-items-center">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="checkboxAll">
+                        <label class="form-check-label" for="checkboxAll">
+                            Select all
+                        </label>
+                    </div>
+
+                    <select class="form-control form-control-sm checkbox-select-all-options" name="action" id="selectActions" required>
+                        <option value="">-- Select action --</option>
+                        <option value="delete">Delete</option>
+                    </select>
+
+                    <button class="btn btn-primary btn-sm check-all-submit-btn" disabled>Submit</button>
+                </div>
+
+                <table class="table mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Image</th>
+                        </tr>
+                    </thead>
+                    <tbody id="preview"></tbody>
+                </table>
+            </form>
         </div>
     </div>
 </div>
