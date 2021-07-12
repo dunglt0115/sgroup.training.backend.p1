@@ -60,7 +60,7 @@ class Service implements ArticleService {
     }
 
     async archievePageActionHandler(body: any): Promise<void> {
-        switch (body.actions) {
+        switch (body.action) {
             case 'delete':
                 body.articleIds.forEach(async (id: string) => {
                     await ArticleModel.updateOne({_id: mongoose.Types.ObjectId(id)}, {
@@ -78,7 +78,7 @@ class Service implements ArticleService {
     }
 
     async trashPageActionHandler(body: any): Promise<void> {
-        switch (body.actions) {
+        switch (body.action) {
             case 'restore':
                 body.articleIds.forEach(async (id: string) => {
                     await ArticleModel.updateOne({_id: mongoose.Types.ObjectId(id)}, {

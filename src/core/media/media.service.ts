@@ -16,16 +16,14 @@ class Service implements MediaService {
     }
 
     async deleteOne(id: string): Promise<void> {
-        await cloudinary.uploader.destroy(id, function(error, result) {
-            console.log(result, error);
-        });
+        await cloudinary.uploader.destroy(id);
         return;
     }
 
     async uploadMany(files: Express.Multer.File[], name: string): Promise<any> {
         try {
             if (!files) {
-                return 'Error!';
+                throw new Error('No files');
             }
 
             const urls = [];
@@ -46,9 +44,23 @@ class Service implements MediaService {
 
             return urls;
         } catch (error) {
-            console.log(error);
-            return 'Upload failed!';
+            throw new Error(error);
         }
+    }
+
+    async deleteMany(body: any): Promise<void> {
+        switch (body.action) {
+            case 'delete':
+                await cloudinary.api.delete_resources(body.publicIds);
+
+                await ArticleModel.updateOne({slug: body.galleryName}, {gallery: body.urls});
+                
+                break;
+            default:
+                throw new Error('Invalid action');
+        }
+
+        return;
     }
 }
 

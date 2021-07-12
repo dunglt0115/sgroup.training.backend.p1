@@ -59,12 +59,28 @@ class Controller {
 
             return res.status(200).json({
                 images: uploadResponse
-            })
+            });
         } catch (error) {
             return res.status(500).json({
                 message: error.message
             });
         }
+    }
+
+    deleteMany = async (req: Request, res: Response) => {
+        try {
+            await this.mediaService.deleteMany(req.body);
+        } catch (error) {
+            return res.status(400).json({
+                message: error.message,
+                trace: error.trace,
+                stack: error.stack
+            });
+        }
+
+        return res.status(200).json({
+            message: 'OK'
+        });
     }
 }
 

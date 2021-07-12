@@ -54,11 +54,10 @@ document.addEventListener("DOMContentLoaded", function() {
     containerForm.on('submit', async function(e) {
         e.preventDefault();
 
-        const actions = document.getElementById('selectActions').value;
-        const checkboxIds = document.querySelectorAll('#articleIds .isChecked');
+        const action = document.getElementById('selectAction').value;
         let articleIds = [];
         
-        checkboxIds.forEach(item => {
+        document.querySelectorAll('#articleIds .isChecked').forEach(item => {
             articleIds.push(item.value);
         });
 
@@ -70,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                actions,
+                action,
                 articleIds,
             }),
         });
