@@ -8,7 +8,8 @@
     "build:start": "npm run build && node build/index.js",
     "build": "rm -rf ./build && tsc",
     "dev": "nodemon",
-    "watch": "node-sass --watch src/resources/scss/ -o src/public/css/",
+    "seed": "ts-node src/database/seed.ts",
+    "rollback": "ts-node src/database/rollback.ts",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "repository": {
@@ -43,6 +44,7 @@
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.12",
     "@types/express-handlebars": "^5.3.0",
+    "@types/glob": "^7.1.4",
     "@types/jsonwebtoken": "^8.5.3",
     "@types/method-override": "0.0.31",
     "@types/multer": "^1.4.6",
